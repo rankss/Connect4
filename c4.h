@@ -18,10 +18,10 @@ private:
 
 public:
 	c4();
-	c4(const c4 &s);
 
 	bool play(int col);
 	bool check_win();
+	int evaluate();
 
 	void display();
 };

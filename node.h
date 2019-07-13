@@ -2,11 +2,13 @@
 #define NODE
 
 #include <vector>
+#include "c4.h"
 
 template <typename T>
 class node {
 private:
 	T* data;
+
 	node<T> *child;
 	std::vector< node<T> *> children;
 

@@ -35,3 +35,5 @@ template <typename T>
 void node<T>::add_child(node<T> *n) {
 	children.push_back(n);
 }
+
+template class node<c4>;

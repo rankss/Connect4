@@ -6,12 +6,6 @@ c4::c4() {
 	moves = 0;
 }
 
-c4::c4(const c4 &s) {
-	curr = s.curr;
-	mask = s.mask;
-	moves = s.moves;
-}
-
 U64 c4::top_mask(int col) {
 	return (U64(1) << (HEIGHT - 1) << col*(HEIGHT + 1));
 }
@@ -38,6 +32,10 @@ bool c4::check_win() {
 	return false;
 }
 
+int c4::evaluate() {
+	return 0;
+}
+
 void c4::display() {
 	/*  
 		Prints bitboard to console
@@ -50,12 +48,14 @@ void c4::display() {
 		0  7 14 21 28 35 42 
 		To be done
 	*/
+	std::cout << "Turn: " << moves << std::endl;
+
 	std::string bin_cur = "", bin_opp = "";
 	U64 cur, opp;
 	if (moves%2)
-		cur = curr, opp = curr ^= mask;
+		cur = curr^mask , opp = curr;
 	else
-		opp = curr, cur = curr ^= mask;
+		cur = curr, opp = curr^mask;
 
 	int length = 64;
 	while (length--) {
@@ -64,8 +64,7 @@ void c4::display() {
 		cur/=2;
 		opp/=2;
 	}
-	std::cout << bin_cur << std::endl;
-	std::cout << bin_opp << std::endl;
+
 	for (int i = 6; i >= 0; i--) {
 		for (int j = 0; j < WIDTH; j++) {
 			if (i == 6)

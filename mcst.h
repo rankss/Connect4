@@ -3,13 +3,16 @@
 
 #include "node.h"
 
+template <typename T>
 class mcst {
 private:
-	// node<T> *root;
+	node<T> *root;
 
 public:
 	mcst();
 	~mcst();
+
+	node<T>* getRoot();
 
 	void playout();
 	int backpropagation();
