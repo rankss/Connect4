@@ -1,6 +1,6 @@
 # Connect 4 (With 2 AI Components)
 
-Project written in C++. (Will soon add Makefile).
+Project written in C++. Makefile added, build by running $make.
 
 # Pure Monte Carlo Search Tree
 
