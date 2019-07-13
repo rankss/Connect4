@@ -3,22 +3,25 @@
 
 #include <iostream>
 #include <cstring>
+
 #define U64 uint64_t
+#define HEIGHT 6
+#define WIDTH 7
 
 class c4 {
 private:
-	const static int HEIGHT = 6, WIDTH = 7;
 
 	U64 curr, mask; 
 	int moves;
 
 	U64 bottom_mask(int col);
 	U64 top_mask(int col);
-	bool playable(int col);
 
 public:
 	c4();
+	~c4();
 
+	bool playable(int col);
 	bool play(int col);
 	bool check_win();
 	int evaluate();

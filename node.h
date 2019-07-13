@@ -8,7 +8,7 @@ template <typename T>
 class node {
 private:
 	T* data;
-
+	int score;
 	node<T> *child;
 	std::vector< node<T> *> children;
 
@@ -18,6 +18,10 @@ public:
 	~node();
 
 	T* getData();
+	node<T>* getChild();
+	int getScore();
+	void setScore(int s);
+
 	void set_child(node<T> *n);
 	void add_child(node<T> *n);
 

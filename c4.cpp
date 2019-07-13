@@ -6,6 +6,10 @@ c4::c4() {
 	moves = 0;
 }
 
+c4::~c4() {
+	std::cout << "...calling c4 dtor" << std::endl;
+}
+
 U64 c4::top_mask(int col) {
 	return (U64(1) << (HEIGHT - 1) << col*(HEIGHT + 1));
 }
@@ -29,10 +33,12 @@ bool c4::play(int col) {
 }
 
 bool c4::check_win() {
+	// Checks if current state is a win
 	return false;
 }
 
 int c4::evaluate() {
+	// Makes an estimated score of current board state
 	return 0;
 }
 
