@@ -1,18 +1,18 @@
 #ifndef MCST
 #define MCST
 
-#include "state.h"
+#include "node.h"
 
-class MCST {
+class mcst {
 private:
-	State *root;
+	// node<T> *root;
 
 public:
-	MCST();
-	~MCST();
+	mcst();
+	~mcst();
 
 	void playout();
 	int backpropagation();
-}
+};
 
 #endif

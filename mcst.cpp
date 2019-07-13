@@ -1,17 +1,17 @@
 #include "mcst.h"
 
-MCST::MCST() {
-	root = new State();
+mcst::mcst() {
+	// root = new node<T>();
 }
 
-MCST::~MCST() {
-
-}
-
-void MCST::playout() {
+mcst::~mcst() {
 
 }
 
-int MCST::backpropagation() {
-	
+void mcst::playout() {
+
+}
+
+int mcst::backpropagation() {
+	return 0;
 }

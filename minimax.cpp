@@ -1,17 +1,17 @@
 #include "minimax.h"
 
-Minimax::Minimax() {
-	root = new State();
+minimax::minimax() {
+	// root = new node();
 }
 
-Minimax::~Minimax() {
-
-}
-
-void Minimax::populate() {
+minimax::~minimax() {
 
 }
 
-int Minimax::backpropagation() {
-	
+void minimax::populate() {
+
+}
+
+int minimax::backpropagation() {
+	return 0;
 }

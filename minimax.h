@@ -1,18 +1,18 @@
 #ifndef MINIMAX
 #define MINIMAX
 
-#include "state.h"
+#include "node.h"
 
-class Minimax {
+class minimax {
 private:
-	State *root;
+	// node *root;
 
 public:
-	Minimax();
-	~Minimax();
+	minimax();
+	~minimax();
 
 	void populate();
 	int backpropagation();
-}
+};
 
 #endif
