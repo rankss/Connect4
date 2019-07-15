@@ -18,12 +18,13 @@ node<T>* mcst<T>::getRoot() {
 
 template <typename T>
 void mcst<T>::playout(node<T> *n, int p) {
-	//int r;
+	int r;
 	while (p--) {
 		// Do a playout
 		while (!n->getData()->check_win()) {
-			//r = rand() % WIDTH;
+			r = rand() % WIDTH;
 			// Generate random playouts
+			// Be careful of memory leaks (use valgrind)
 		}
 		backpropagation(n);
 	}
@@ -36,7 +37,7 @@ void mcst<T>::populate() {
 	for (int i = 0; i < WIDTH; i++) {
 		*n = *root;
 		if (n->getData()->play(i)) {
-			p = 0; // number of playouts
+			p = 0; // Pick a good number for playouts
 			if (!n->getData()->check_win())
 				playout(n, p);
 		}

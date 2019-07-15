@@ -22,8 +22,8 @@ public:
 	int getScore();
 	void setScore(int s);
 
-	void set_child(node<T> *n);
-	void add_child(node<T> *n);
+	void setChild(node<T> *n);
+	void addChild(node<T> *n);
 
 };
 

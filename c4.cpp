@@ -33,7 +33,20 @@ bool c4::play(int col) {
 }
 
 bool c4::check_win() {
-	// Checks if current state is a win
+	// Checks if state c is a win
+	U64 c = curr^mask, w;
+	// Vertical
+	w = c & (c >> 1);
+	if (w & (w >> 2)) return true;
+	// Horizontal
+	w = c & (c >> (HEIGHT + 1));
+	if (w & (w >> (2 * (HEIGHT + 1)))) return true;
+	// Diagonals
+	w = c & (c >> HEIGHT);
+	if (w & (w >> (2 * HEIGHT))) return true;
+	w = c & (c >> (HEIGHT + 2));
+	if (w & (w >> (2 * (HEIGHT + 2)))) return true;
+
 	return false;
 }
 

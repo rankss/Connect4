@@ -45,12 +45,12 @@ void node<T>::setScore(int s) {
 }
 
 template <typename T>
-void node<T>::set_child(node<T> *n) {
+void node<T>::setChild(node<T> *n) {
 	child = n;
 }
 
 template <typename T>
-void node<T>::add_child(node<T> *n) {
+void node<T>::addChild(node<T> *n) {
 	children.push_back(n);
 }
 
