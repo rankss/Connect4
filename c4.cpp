@@ -32,7 +32,7 @@ bool c4::play(int col) {
 	return false;
 }
 
-bool c4::check_win() {
+bool c4::alignment() {
 	// Checks if state c is a win
 	U64 c = curr^mask, w;
 	// Vertical

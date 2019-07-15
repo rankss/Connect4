@@ -12,6 +12,14 @@ mcst<T>::~mcst() {
 }
 
 template <typename T>
+int mcst<T>::backpropagation(node<T> *n) {
+	if (n->getChild() == nullptr)
+		return n->getScore();
+	n->setScore(n->getScore() + backpropagation(n->getChild()));
+	return n->getScore();
+}
+
+template <typename T>
 node<T>* mcst<T>::getRoot() {
 	return root;
 }
@@ -19,12 +27,15 @@ node<T>* mcst<T>::getRoot() {
 template <typename T>
 void mcst<T>::playout(node<T> *n, int p) {
 	int r;
+	node<c4> c* = nullptr;
 	while (p--) {
 		// Do a playout
 		while (!n->getData()->check_win()) {
 			r = rand() % WIDTH;
 			// Generate random playouts
 			// Be careful of memory leaks (use valgrind)
+			*c = *n;
+
 		}
 		backpropagation(n);
 	}
@@ -42,14 +53,6 @@ void mcst<T>::populate() {
 				playout(n, p);
 		}
 	}
-}
-
-template <typename T>
-int mcst<T>::backpropagation(node<T> *n) {
-	if (n->getChild() == nullptr)
-		return n->getScore();
-	n->setScore(n->getScore() + backpropagation(n->getChild()));
-	return n->getScore();
 }
 
 template class mcst<c4>;

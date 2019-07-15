@@ -23,7 +23,7 @@ public:
 
 	bool playable(int col);
 	bool play(int col);
-	bool check_win();
+	bool alignment();
 	int evaluate();
 
 	void display();
