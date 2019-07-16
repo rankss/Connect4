@@ -4,6 +4,7 @@
 using namespace std;
 
 void startMCST() {
+	// Driver
 	bool first = rand() % 2;
 	mcst<c4> *tree = new mcst<c4>(first);
 	tree->getRoot()->getData()->display();
