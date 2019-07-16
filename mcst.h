@@ -1,24 +1,26 @@
 #ifndef MCST
 #define MCST
 
-#include <cstdlib>
 #include "node.h"
 
 template <typename T>
 class mcst {
 private:
 	node<T> *root;
+	bool first;
 
 	void playout(node<T> *n, int p);
-	int backpropagation(node<T> *n);
+	void populate();
+	int backpropagate(node<T> *n);
 
 public:
-	mcst();
+	mcst(bool f);
 	~mcst();
 
 	node<T>* getRoot();
 
-	void populate();
+	void select();
+	void play();
 };
 
 #endif

@@ -3,16 +3,17 @@
 
 #include "node.h"
 
+template <typename T>
 class minimax {
 private:
-	// node *root;
+	node<T> *root;
 
 public:
 	minimax();
 	~minimax();
 
 	void populate();
-	int backpropagation();
+	int backpropagate();
 };
 
 #endif

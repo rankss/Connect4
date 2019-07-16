@@ -1,17 +1,23 @@
 #include "minimax.h"
 
-minimax::minimax() {
-	// root = new node();
+template <typename T>
+minimax<T>::minimax() {
+	root = new node<T>();
 }
 
-minimax::~minimax() {
+template <typename T>
+minimax<T>::~minimax() {
+	delete root;
+}
+
+template <typename T>
+void minimax<T>::populate() {
 
 }
 
-void minimax::populate() {
-
-}
-
-int minimax::backpropagation() {
+template <typename T>
+int minimax<T>::backpropagate() {
 	return 0;
 }
+
+template class minimax<c4>;

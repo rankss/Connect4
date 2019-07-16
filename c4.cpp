@@ -7,7 +7,7 @@ c4::c4() {
 }
 
 c4::~c4() {
-	std::cout << "...calling c4 dtor" << std::endl;
+	//std::cout << "...calling c4 dtor" << std::endl;
 }
 
 U64 c4::top_mask(int col) {
@@ -22,19 +22,9 @@ bool c4::playable(int col) {
 	return !(mask & top_mask(col));
 }
 
-bool c4::play(int col) {
-	if (playable(col)) {
-		curr ^= mask;
-		mask |= mask + bottom_mask(col);
-		moves++;
-		return true;
-	}
-	return false;
-}
-
-bool c4::alignment() {
+bool c4::alignment(U64 c) {
 	// Checks if state c is a win
-	U64 c = curr^mask, w;
+	U64 w = 0;
 	// Vertical
 	w = c & (c >> 1);
 	if (w & (w >> 2)) return true;
@@ -50,18 +40,46 @@ bool c4::alignment() {
 	return false;
 }
 
-int c4::evaluate() {
-	// Makes an estimated score of current board state
+bool c4::draw(U64 c) {
+	for (int i = 0; i < WIDTH; i++)
+		if (playable(i))
+			return false;
+
+	return true;
+}
+
+bool c4::play(int col) {
+	if (playable(col)) {
+		curr ^= mask;
+		mask |= mask + bottom_mask(col);
+		moves++;
+		return true;
+	}
+	return false;
+}
+
+int c4::evalMCST(int t) {
+	U64 c = curr^mask;
+	if (alignment(c)) {
+		if (moves%2 == t) return 2;
+		else return -3;
+	} else if (draw(c)) {
+		if (moves%2 == t) return 1;
+	}
+
+	return 0;
+}
+
+int c4::evalMinimax() {
 	return 0;
 }
 
 std::vector<int> c4::possible() {
 	std::vector<int> moves;
-	for (int i = 0; i < WIDTH; i++) {
-		if (playable(i)) {
+	for (int i = 0; i < WIDTH; i++)
+		if (playable(i))
 			moves.push_back(i);
-		}
-	}
+
 	return moves;
 }
 
@@ -75,33 +93,35 @@ void c4::display() {
 		2  9 16 23 30 37 44
 		1  8 15 22 29 36 43
 		0  7 14 21 28 35 42 
-		To be done
 	*/
-	std::cout << "Turn: " << moves << std::endl;
-
-	std::string bin_cur = "", bin_opp = "";
-	U64 cur, opp;
-	if (moves%2)
-		cur = curr^mask , opp = curr;
+	if (moves)
+		std::cout << "Turn: " << moves << std::endl;
 	else
-		cur = curr, opp = curr^mask;
+		std::cout << "Game Start" << std::endl;
+
+	std::string bin_c = "", bin_o = "";
+	U64 c, o;
+	if (moves%2)
+		c = curr^mask, o = curr;
+	else
+		c = curr, o = curr^mask;
 
 	int length = 64;
 	while (length--) {
-		bin_cur += (cur%2 == 0 ? '0' : '1');
-		bin_opp += (opp%2 == 0 ? '0' : '1');
-		cur/=2;
-		opp/=2;
+		bin_c += (c%2 == 0 ? '0' : '1');
+		bin_o += (o%2 == 0 ? '0' : '1');
+		c/=2;
+		o/=2;
 	}
 
 	for (int i = 6; i >= 0; i--) {
 		for (int j = 0; j < WIDTH; j++) {
 			if (i == 6)
-				std::cout << ". ";
+				std::cout << j << " ";
 			else {
-				if (bin_cur[i+j*WIDTH] == '1')
+				if (bin_c[i+j*WIDTH] == '1')
 					std::cout << "O ";
-				else if(bin_opp[i+j*WIDTH] == '1')
+				else if(bin_o[i+j*WIDTH] == '1')
 					std::cout << "X ";
 				else
 					std::cout << "- ";
@@ -109,4 +129,5 @@ void c4::display() {
 		}
 		std::cout << std::endl;
 	}
+	std::cout << std::endl;
 }

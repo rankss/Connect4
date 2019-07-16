@@ -17,7 +17,7 @@ node<T>::node(const node<T> &n) {
 
 template <typename T>
 node<T>::~node() {
-	std::cout << "...calling node dtor" << std::endl;
+	//std::cout << "...calling node dtor" << std::endl;
 	delete data;
 	delete child;
 	for (node<T> *child : children)
