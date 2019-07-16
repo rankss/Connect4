@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <vector>
 
 #define U64 uint64_t
 #define HEIGHT 6
@@ -10,7 +11,6 @@
 
 class c4 {
 private:
-
 	U64 curr, mask; 
 	int moves;
 
@@ -25,6 +25,7 @@ public:
 	bool play(int col);
 	bool alignment();
 	int evaluate();
+	std::vector<int> possible();
 
 	void display();
 };

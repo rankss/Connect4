@@ -1,7 +1,6 @@
 #ifndef NODE
 #define NODE
 
-#include <vector>
 #include "c4.h"
 
 template <typename T>
@@ -19,12 +18,10 @@ public:
 
 	T* getData();
 	node<T>* getChild();
-	int getScore();
-	void setScore(int s);
-
 	void setChild(node<T> *n);
 	void addChild(node<T> *n);
-
+	int getScore();
+	void setScore(int s);
 };
 
 #endif

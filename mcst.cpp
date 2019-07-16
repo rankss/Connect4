@@ -26,16 +26,20 @@ node<T>* mcst<T>::getRoot() {
 
 template <typename T>
 void mcst<T>::playout(node<T> *n, int p) {
-	int r;
-	node<c4> c* = nullptr;
+	int move;
+	std::vector<int> moves;
+	node<T> *c = nullptr, *curr = n;
 	while (p--) {
 		// Do a playout
-		while (!n->getData()->check_win()) {
-			r = rand() % WIDTH;
+		while (!curr->getData()->alignment()) {
 			// Generate random playouts
 			// Be careful of memory leaks (use valgrind)
-			*c = *n;
-
+			moves = curr->getData()->possible(); // Get all possible moves
+			move = moves[rand() % moves.size()]; // Select random move
+			c = new node<T>(*curr);
+			c->getData()->play(move); // Create new copy node and play the move
+			curr->setChild(c); // Set node as child
+			curr = curr->getChild();
 		}
 		backpropagation(n);
 	}
@@ -43,14 +47,19 @@ void mcst<T>::playout(node<T> *n, int p) {
 
 template <typename T>
 void mcst<T>::populate() {
-	int p;
+	int p, max = 0;
 	node<T> *n = nullptr;
 	for (int i = 0; i < WIDTH; i++) {
-		*n = *root;
+		n = new node<T>(*root);
 		if (n->getData()->play(i)) {
-			p = 0; // Pick a good number for playouts
-			if (!n->getData()->check_win())
+			p = 1; // Pick a good number for playouts
+			if (!n->getData()->alignment())
 				playout(n, p);
+
+			if (n->getScore() >= max) {
+				max = n->getScore();
+				root->setChild(n);
+			}
 		}
 	}
 }

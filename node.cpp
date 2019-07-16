@@ -35,6 +35,20 @@ node<T>* node<T>::getChild() {
 }
 
 template <typename T>
+void node<T>::setChild(node<T> *n) {
+	if (child != nullptr) {
+		delete child;
+		child = nullptr;
+	}
+	child = n;
+}
+
+template <typename T>
+void node<T>::addChild(node<T> *n) {
+	children.push_back(n);
+}
+
+template <typename T>
 int node<T>::getScore() {
 	return score;
 }
@@ -42,16 +56,6 @@ int node<T>::getScore() {
 template <typename T>
 void node<T>::setScore(int s) {
 	score = s;
-}
-
-template <typename T>
-void node<T>::setChild(node<T> *n) {
-	child = n;
-}
-
-template <typename T>
-void node<T>::addChild(node<T> *n) {
-	children.push_back(n);
 }
 
 template class node<c4>;

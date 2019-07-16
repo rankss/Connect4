@@ -55,6 +55,16 @@ int c4::evaluate() {
 	return 0;
 }
 
+std::vector<int> c4::possible() {
+	std::vector<int> moves;
+	for (int i = 0; i < WIDTH; i++) {
+		if (playable(i)) {
+			moves.push_back(i);
+		}
+	}
+	return moves;
+}
+
 void c4::display() {
 	/*  
 		Prints bitboard to console
