@@ -8,18 +8,19 @@ mcst<T>::mcst(bool f) {
 
 template <typename T>
 mcst<T>::~mcst() {
-	//std::cout << "...calling mcst dtor" << std::endl;
 	delete root;
 }
 
 template <typename T>
 void mcst<T>::playout(node<T> *n, int p) {
-	int m;
+	int m, s;
 	std::vector<int> moves;
-	node<T> *c = nullptr, *curr = n;
+	node<T> *c = nullptr, *curr = nullptr;
 	while (p--) {
 		// Do a playout
-		while (!curr->getScore()) {
+		curr = n;
+		s = 0;
+		while (!s) {
 			// Generate random playouts
 			// Be careful of memory leaks (use valgrind)
 			moves = curr->getData()->possible(); // Get all possible moves
@@ -27,9 +28,10 @@ void mcst<T>::playout(node<T> *n, int p) {
 			m = moves[rand() % moves.size()]; // Select random move
 			c = new node<T>(*curr);
 			c->getData()->play(m); // Create new copy node and play the move
+			s = c->getData()->result(first, false);
+			c->setScore(s);
 			curr->setChild(c); // Set node as child
 			curr = curr->getChild();
-			curr->setScore(curr->getData()->evalMCST(first));
 		}
 		backpropagate(n);
 	}
@@ -37,22 +39,28 @@ void mcst<T>::playout(node<T> *n, int p) {
 
 template <typename T>
 void mcst<T>::populate() {
-	int p, max = 0;
+	int max = INT_MIN;
 	node<T> *n = nullptr;
-	for (int i = 0; i < WIDTH; i++) {
+	std::vector<int> moves = root->getData()->possible();
+	for (int m : moves) {
 		n = new node<T>(*root);
-		if (n->getData()->play(i)) {
-			p = 2; // Pick a good number for playouts
-			n->setScore(n->getData()->evalMCST(first));
-			if (!n->getScore())
-				playout(n, p);
+		n->getData()->play(m);
 
-			if (n->getScore() >= max) {
-				max = n->getScore();
+		n->setScore(n->getData()->result(first, false));
+		if (!n->getScore())
+			playout(n, 2000);
+		else {
+			if (n->getScore() > 0) {
 				root->setChild(n);
-			} else {
-				delete n;
+				break;
 			}
+		}
+
+		if (n->getScore() >= max) {
+			max = n->getScore();
+			root->setChild(n);
+		} else {
+			delete n;
 		}
 	}
 }
@@ -61,6 +69,7 @@ template <typename T>
 int mcst<T>::backpropagate(node<T> *n) {
 	if (n->getChild() == nullptr)
 		return n->getScore();
+
 	n->setScore(n->getScore() + backpropagate(n->getChild()));
 	return n->getScore();
 }
@@ -86,10 +95,7 @@ void mcst<T>::play() {
 	std::vector<int> moves = root->getData()->possible();
 	int m;
 	std::cout << "Player's turn" << std::endl;
-	std::cout << "Please choose a move from: " << std::endl;
-	for (int move : moves) 
-		std::cout << move << " ";
-	std::cout << std::endl;
+	std::cout << "Please choose a move: ";
 
 	std::cin >> m;
 	while (std::find(moves.begin(), moves.end(), m) == moves.end()) {

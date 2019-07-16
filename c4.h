@@ -4,8 +4,6 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
-#include <algorithm>
-#include <cstdlib>
 
 #define U64 uint64_t
 #define HEIGHT 6
@@ -26,9 +24,8 @@ public:
 	c4();
 	~c4();
 
-	bool play(int col);
-	int evalMCST(int t);
-	int evalMinimax();
+	void play(int col);
+	int result(int t, bool p);
 	std::vector<int> possible();
 
 	void display();

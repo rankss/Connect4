@@ -1,6 +1,9 @@
 #ifndef MCST
 #define MCST
 
+#include <algorithm>
+#include <climits>
+#include <cstdlib>
 #include "node.h"
 
 template <typename T>

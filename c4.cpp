@@ -7,7 +7,6 @@ c4::c4() {
 }
 
 c4::~c4() {
-	//std::cout << "...calling c4 dtor" << std::endl;
 }
 
 U64 c4::top_mask(int col) {
@@ -48,29 +47,29 @@ bool c4::draw(U64 c) {
 	return true;
 }
 
-bool c4::play(int col) {
-	if (playable(col)) {
-		curr ^= mask;
-		mask |= mask + bottom_mask(col);
-		moves++;
-		return true;
-	}
-	return false;
+void c4::play(int col) {
+	curr ^= mask;
+	mask |= mask + bottom_mask(col);
+	moves++;
 }
 
-int c4::evalMCST(int t) {
+int c4::result(int t, bool p) {
 	U64 c = curr^mask;
+
 	if (alignment(c)) {
-		if (moves%2 == t) return 2;
-		else return -3;
+		if (moves%2 == t) {
+			if (p) std::cout << "AI wins." << std::endl;
+			return 3;
+		}
+		else {
+			if (p) std::cout << "Player wins." << std::endl;
+			return -5;
+		}
 	} else if (draw(c)) {
-		if (moves%2 == t) return 1;
+		if (p) std::cout << "Draw." << std::endl;
+		return 1;
 	}
 
-	return 0;
-}
-
-int c4::evalMinimax() {
 	return 0;
 }
 
