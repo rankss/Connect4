@@ -14,8 +14,11 @@ void startMCST() {
 		if (turn) {
 			start = time(nullptr);
 			tree->select();
-			elapsed = time(nullptr) - start; 
-			cout << "Move took: " << elapsed << " seconds. Playouts per second per legal move: " << float(P/elapsed) << "." << endl;
+			elapsed = time(nullptr) - start;
+			if (elapsed != 0)
+				cout << "Move took: " << elapsed << " seconds. Playouts per second per legal move: " << float(P/elapsed) << "." << endl;
+			else
+				cout << "Move took: " << elapsed << " seconds. Playouts cannot be measured." << endl;
 		} else {
 			tree->play();
 		}
@@ -28,7 +31,7 @@ void startMCST() {
 }
 
 int main() {
-	srand(time(nullptr));
+	//srand(time(nullptr));
 	startMCST();
 	
 	return 0;
