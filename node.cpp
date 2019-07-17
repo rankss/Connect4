@@ -3,16 +3,18 @@
 template <typename T>
 node<T>::node() {
 	data = new T();
-	score = 0;
 	child = nullptr;
+	score = 0;
+	move = -1;
 }
 
 template <typename T>
 node<T>::node(const node<T> &n) {
 	data = new T();
 	*data = *n.data;
-	score = 0;
 	child = nullptr;
+	score = 0;
+	move = n.move;
 }
 
 template <typename T>
@@ -55,6 +57,16 @@ int node<T>::getScore() {
 template <typename T>
 void node<T>::setScore(int s) {
 	score = s;
+}
+
+template <typename T>
+int node<T>::getMove() {
+	return move;
+}
+
+template <typename T>
+void node<T>::setMove(int m) {
+	move = m;
 }
 
 template class node<c4>;

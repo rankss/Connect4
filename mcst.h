@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include "node.h"
 
+#define P 15000
+
 template <typename T>
 class mcst {
 private:

@@ -28,6 +28,7 @@ void mcst<T>::playout(node<T> *n, int p) {
 			m = moves[rand() % moves.size()]; // Select random move
 			c = new node<T>(*curr);
 			c->getData()->play(m); // Create new copy node and play the move
+			c->setMove(m);
 			s = c->getData()->result(first, false);
 			c->setScore(s);
 			curr->setChild(c); // Set node as child
@@ -45,10 +46,11 @@ void mcst<T>::populate() {
 	for (int m : moves) {
 		n = new node<T>(*root);
 		n->getData()->play(m);
+		n->setMove(m);
 
 		n->setScore(n->getData()->result(first, false));
 		if (!n->getScore())
-			playout(n, 2000);
+			playout(n, P);
 		else {
 			if (n->getScore() > 0) {
 				root->setChild(n);
@@ -85,6 +87,7 @@ void mcst<T>::select() {
 	std::cout << "AI's turn" << std::endl;
 	populate();
 	node<T> *n = new node<T>(*root->getChild());
+	std::cout << "AI chose: " << n->getMove() << std::endl;
 	delete root;
 	root = n;
 }
