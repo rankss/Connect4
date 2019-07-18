@@ -6,7 +6,7 @@
 #include <climits>
 #include "node.h"
 
-#define P 15000
+#define P 15000 //3412223034455066611
 
 template <typename T>
 class mcst {

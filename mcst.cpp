@@ -26,9 +26,8 @@ void mcst<T>::playout(node<T> *n) {
 			if (moves.empty()) break;
 			m = moves[rand() % moves.size()]; // Select random move
 			c->getData()->play(m); // Play move
-			c->setMove(m);
-			s = c->getData()->result(first, false);
-			c->setScore(s);
+			c->setScore(c->getData()->result(first, false));
+			s = c->getScore();
 		}
 		backpropagate(n);
 	}
