@@ -73,6 +73,10 @@ int c4::result(int t, bool p) {
 	return 0;
 }
 
+int c4::heuristic() {
+	return 0;
+}
+
 std::vector<int> c4::possible() {
 	std::vector<int> moves;
 	for (int i = 0; i < WIDTH; i++)

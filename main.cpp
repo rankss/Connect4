@@ -6,11 +6,10 @@ using namespace std;
 void startMCST() {
 	// Driver
 	time_t start, elapsed;
-	bool first = rand() % 2;
-	mcst<c4> *tree = new mcst<c4>(first);
+	mcst<c4> *tree = new mcst<c4>();
 	tree->getRoot()->getData()->display();
-	int turn = first;
-	while (!tree->getRoot()->getData()->result(first, true)) {
+	int turn = tree->getFirst();
+	while (!tree->getRoot()->getData()->result(tree->getFirst(), true)) {
 		if (turn) {
 			start = time(nullptr);
 			tree->select();

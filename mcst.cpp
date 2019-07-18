@@ -1,9 +1,9 @@
 #include "mcst.h"
 
 template <typename T>
-mcst<T>::mcst(bool f) {
+mcst<T>::mcst() {
 	root = new node<T>();
-	first = f;
+	first = rand() % 2;
 }
 
 template <typename T>
@@ -12,8 +12,8 @@ mcst<T>::~mcst() {
 }
 
 template <typename T>
-void mcst<T>::playout(node<T> *n, int p) {
-	int m, s;
+void mcst<T>::playout(node<T> *n) {
+	int m, s, p = P;
 	std::vector<int> moves;
 	node<T> *c = nullptr, *curr = nullptr;
 	while (p--) {
@@ -50,7 +50,7 @@ void mcst<T>::populate() {
 
 		n->setScore(n->getData()->result(first, false));
 		if (!n->getScore())
-			playout(n, P);
+			playout(n);
 		else {
 			if (n->getScore() > 0) {
 				root->setChild(n);
@@ -82,6 +82,11 @@ node<T>* mcst<T>::getRoot() {
 }
 
 template <typename T>
+bool mcst<T>::getFirst() {
+	return first;
+}
+
+template <typename T>
 void mcst<T>::select() {
 	// AI move
 	std::cout << "AI's turn" << std::endl;
@@ -96,13 +101,11 @@ template <typename T>
 void mcst<T>::play() {
 	// Player move
 	std::vector<int> moves = root->getData()->possible();
-	int m;
 	std::cout << "Player's turn" << std::endl;
-	std::cout << "Please choose a move: ";
 
-	std::cin >> m;
+	int m = -1;
 	while (std::find(moves.begin(), moves.end(), m) == moves.end()) {
-		std::cout << "Please choose a legal move: ";
+		std::cout << "Please choose a move: ";
 		std::cin >> m;
 	}
 

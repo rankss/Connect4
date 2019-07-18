@@ -14,15 +14,16 @@ private:
 	node<T> *root;
 	bool first;
 
-	void playout(node<T> *n, int p);
+	void playout(node<T> *n);
 	void populate();
 	int backpropagate(node<T> *n);
 
 public:
-	mcst(bool f);
+	mcst();
 	~mcst();
 
 	node<T>* getRoot();
+	bool getFirst();
 
 	void select();
 	void play();

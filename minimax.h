@@ -7,9 +7,10 @@ template <typename T>
 class minimax {
 private:
 	node<T> *root;
+	bool first;
 
 public:
-	minimax();
+	minimax(bool f);
 	~minimax();
 
 	void populate();

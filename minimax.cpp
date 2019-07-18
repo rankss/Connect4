@@ -1,8 +1,9 @@
 #include "minimax.h"
 
 template <typename T>
-minimax<T>::minimax() {
+minimax<T>::minimax(bool f) {
 	root = new node<T>();
+	first = f;
 }
 
 template <typename T>

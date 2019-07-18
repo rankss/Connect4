@@ -26,6 +26,7 @@ public:
 
 	void play(int col);
 	int result(int t, bool p);
+	int heuristic();
 	std::vector<int> possible();
 
 	void display();
