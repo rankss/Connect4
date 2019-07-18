@@ -1,6 +1,7 @@
 #ifndef MINIMAX
 #define MINIMAX
 
+#include <cstdlib>
 #include "node.h"
 
 template <typename T>
@@ -9,12 +10,19 @@ private:
 	node<T> *root;
 	bool first;
 
+	void populate(node<T> *n, int d);
+	int iterate();
+	int alphabeta(node<T> *n, int a, int b);
+
 public:
-	minimax(bool f);
+	minimax();
 	~minimax();
 
-	void populate();
-	int backpropagate();
+	node<T>* getRoot();
+	bool getFirst();
+
+	void select();
+	void play();
 };
 
 #endif

@@ -22,6 +22,7 @@ public:
 	node<T>* getChild();
 	void setChild(node<T> *n);
 	void addChild(node<T> *n);
+	std::vector< node<T> *> getChildren();
 	int getScore();
 	void setScore(int s);
 	int getMove();

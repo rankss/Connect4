@@ -15,24 +15,20 @@ template <typename T>
 void mcst<T>::playout(node<T> *n) {
 	int m, s, p = P;
 	std::vector<int> moves;
-	node<T> *c = nullptr, *curr = nullptr;
+	node<T> *c = nullptr;
 	while (p--) {
 		// Do a playout
-		curr = n;
+		c = new node<T>(*n);
+		n->setChild(c);
 		s = 0;
 		while (!s) {
-			// Generate random playouts
-			// Be careful of memory leaks (use valgrind)
-			moves = curr->getData()->possible(); // Get all possible moves
+			moves = c->getData()->possible(); // Get all possible moves
 			if (moves.empty()) break;
 			m = moves[rand() % moves.size()]; // Select random move
-			c = new node<T>(*curr);
-			c->getData()->play(m); // Create new copy node and play the move
+			c->getData()->play(m); // Play move
 			c->setMove(m);
 			s = c->getData()->result(first, false);
 			c->setScore(s);
-			curr->setChild(c); // Set node as child
-			curr = curr->getChild();
 		}
 		backpropagate(n);
 	}
@@ -42,8 +38,7 @@ template <typename T>
 void mcst<T>::populate() {
 	int max = INT_MIN;
 	node<T> *n = nullptr;
-	std::vector<int> moves = root->getData()->possible();
-	for (int m : moves) {
+	for (int m : root->getData()->possible()) {
 		n = new node<T>(*root);
 		n->getData()->play(m);
 		n->setMove(m);

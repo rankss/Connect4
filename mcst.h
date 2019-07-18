@@ -1,9 +1,9 @@
 #ifndef MCST
 #define MCST
 
+#include <cstdlib>
 #include <algorithm>
 #include <climits>
-#include <cstdlib>
 #include "node.h"
 
 #define P 15000

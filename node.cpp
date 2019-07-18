@@ -50,6 +50,11 @@ void node<T>::addChild(node<T> *n) {
 }
 
 template <typename T>
+std::vector< node<T> *> node<T>::getChildren() {
+	return children;
+}
+
+template <typename T>
 int node<T>::getScore() {
 	return score;
 }
