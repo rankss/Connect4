@@ -1,6 +1,9 @@
 #ifndef NODE
 #define NODE
 
+#include <atomic>
+#include <algorithm>
+#include <cstdlib>
 #include "c4.h"
 
 template <typename T>
@@ -8,10 +11,11 @@ class node {
 private:
 	T* data;
 	
-	node<T> *child;
+	std::atomic< node<T> *> child;
 	std::vector< node<T> *> children;
 
-	int score, move;
+	std::atomic<int> score, total;
+	short move;
 
 public:
 	node();
@@ -26,7 +30,9 @@ public:
 	int getScore();
 	void setScore(int s);
 	int getMove();
-	void setMove(int m);
+	void setMove(short m);
+
+	bool find(node<T> *n);
 };
 
 #endif

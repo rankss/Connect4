@@ -40,11 +40,15 @@ bool c4::alignment(U64 c) {
 }
 
 bool c4::draw(U64 c) {
-	for (int i = 0; i < WIDTH; i++)
-		if (playable(i))
-			return false;
+	if (moves >= HEIGHT*WIDTH && !alignment(c))
+		return true;
+	return false;
+}
 
-	return true;
+int c4::evaluate(U64 c) {
+	if (alignment(c))
+		return 100;
+	return 0;
 }
 
 void c4::play(int col) {
@@ -73,13 +77,18 @@ int c4::result(int t, bool p) {
 	return 0;
 }
 
-int c4::heuristic() {
+int c4::heuristic(int t) {
+	U64 c = curr^mask;
+	if (moves%2 == t)
+		return evaluate(c);
+	else
+		return -evaluate(c);
 	return 0;
 }
 
-std::vector<int> c4::possible() {
-	std::vector<int> moves;
-	for (int i = 0; i < WIDTH; i++)
+std::vector<short> c4::possible() {
+	std::vector<short> moves;
+	for (short i = 0; i < WIDTH; i++)
 		if (playable(i))
 			moves.push_back(i);
 

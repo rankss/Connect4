@@ -5,6 +5,7 @@ node<T>::node() {
 	data = new T();
 	child = nullptr;
 	score = 0;
+	total = 0;
 	move = -1;
 }
 
@@ -14,6 +15,7 @@ node<T>::node(const node<T> &n) {
 	*data = *n.data;
 	child = nullptr;
 	score = 0;
+	total = 0;
 	move = n.move;
 }
 
@@ -70,8 +72,13 @@ int node<T>::getMove() {
 }
 
 template <typename T>
-void node<T>::setMove(int m) {
+void node<T>::setMove(short m) {
 	move = m;
+}
+
+template <typename T>
+bool node<T>::find(node<T> *n) {
+	return (std::find(children.begin(), children.end(), n) != children.end());
 }
 
 template class node<c4>;

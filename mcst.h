@@ -1,8 +1,6 @@
 #ifndef MCST
 #define MCST
 
-#include <cstdlib>
-#include <algorithm>
 #include <climits>
 #include "node.h"
 

@@ -2,6 +2,8 @@
 #define MINIMAX
 
 #include <cstdlib>
+#include <algorithm>
+#include <climits>
 #include "node.h"
 
 template <typename T>

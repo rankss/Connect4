@@ -14,7 +14,7 @@ minimax<T>::~minimax() {
 template <typename T>
 void minimax<T>::populate(node<T> *n, int d) {
 	// Populates tree until depth d
-	if (d == 0) return;
+	if (d == 0 || n->getData()->result(first, false)) return;
 
 	if (n->getChildren().size() > 0)
 		for (node<T> *child : n->getChildren())
@@ -38,11 +38,26 @@ int minimax<T>::iterate() {
 template <typename T>
 int minimax<T>::alphabeta(node<T> *n, int a, int b) {
 	if (n->getChildren().empty())
-		return n->getData()->heuristic();
-	if (first) {
+		return n->getData()->heuristic(first);
 
+	int value;
+	if (first) {
+		value = INT_MIN;
+		for (node<T> *c : n->getChildren()) {
+			value = std::max(value, alphabeta(c, a, b));
+			a = std::max(a, value);
+			if (a >= b) break;
+		}
+	} else {
+		value = INT_MAX;
+		for (node<T> *c : n->getChildren()) {
+			value = std::min(value, alphabeta(c, a, b));
+			b = std::min(b, value);
+			if (a >= b) break;
+		}
 	}
-	return 0;
+
+	return value;
 }
 
 template <typename T>
@@ -58,8 +73,12 @@ bool minimax<T>::getFirst() {
 template <typename T>
 void minimax<T>::select() {
 	// AI move
-	populate(root, 7);
-	//alphabeta();
+	populate(root, 8);
+	for (node<T> *c : root->getChildren()) {
+		c->setScore(alphabeta(c, INT_MIN, INT_MAX));
+		std::cout << c->getScore();
+	}
+
 }
 
 template <typename T>

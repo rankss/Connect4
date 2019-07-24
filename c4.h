@@ -19,6 +19,7 @@ private:
 	bool playable(int col);
 	bool alignment(U64 c);
 	bool draw(U64 c);
+	int evaluate(U64 c);
 
 public:
 	c4();
@@ -26,8 +27,8 @@ public:
 
 	void play(int col);
 	int result(int t, bool p);
-	int heuristic();
-	std::vector<int> possible();
+	int heuristic(int t);
+	std::vector<short> possible();
 
 	void display();
 };

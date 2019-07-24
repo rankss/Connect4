@@ -14,7 +14,7 @@ mcst<T>::~mcst() {
 template <typename T>
 void mcst<T>::playout(node<T> *n) {
 	int m, s, p = P;
-	std::vector<int> moves;
+	std::vector<short> moves;
 	node<T> *c = nullptr;
 	while (p--) {
 		// Do a playout
@@ -37,7 +37,7 @@ template <typename T>
 void mcst<T>::populate() {
 	int max = INT_MIN;
 	node<T> *n = nullptr;
-	for (int m : root->getData()->possible()) {
+	for (short m : root->getData()->possible()) {
 		n = new node<T>(*root);
 		n->getData()->play(m);
 		n->setMove(m);
@@ -94,10 +94,10 @@ void mcst<T>::select() {
 template <typename T>
 void mcst<T>::play() {
 	// Player move
-	std::vector<int> moves = root->getData()->possible();
+	std::vector<short> moves = root->getData()->possible();
 	std::cout << "Player's turn" << std::endl;
 
-	int m = -1;
+	short m = -1;
 	while (std::find(moves.begin(), moves.end(), m) == moves.end()) {
 		std::cout << "Please choose a move: ";
 		std::cin >> m;
