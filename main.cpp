@@ -30,9 +30,29 @@ void startMCST() {
 	delete tree;
 }
 
+void test() {
+	mcst<c4> *tree = new mcst<c4>();
+	tree->getRoot()->getData()->display();
+	bool first = tree->getFirst();
+	int turn = first;
+	while (!tree->getRoot()->getData()->result(first, true)) {
+		if (turn) {
+			tree->play();
+		} else {
+			tree->play();
+		}
+		tree->getRoot()->getData()->display();
+		cout << "row: " << tree->getRoot()->getData()->heuristic(first) << endl;
+		turn++;
+		turn%=2;
+	}
+	
+	delete tree;
+}
+
 int main() {
 	//srand(time(nullptr));
-	startMCST();
-
+	//startMCST();
+	test();
 	return 0;
 }

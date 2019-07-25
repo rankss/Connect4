@@ -84,11 +84,7 @@ int c4::result(bool t, bool p) {
 
 int c4::heuristic(bool t) {
 	U64 c = curr^mask;
-	if (moves%2 == t)
-		return evaluate(c);
-	else
-		return -evaluate(c);
-	return 0;
+	return threat(mask, c);
 }
 
 std::vector<U8> c4::possible() {

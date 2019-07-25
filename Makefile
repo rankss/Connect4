@@ -1,7 +1,7 @@
 CC = g++-7
 CFLAGS = -Wall -g
 TARGET = c4
-OBJS = c4.o node.o mcst.o main.o
+OBJS = c4.o node.o mcst.o main.o heuristics.o
 
 all: $(TARGET)
 

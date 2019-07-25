@@ -4,11 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
-
-#define U64 uint64_t
-#define U8 short
-#define HEIGHT 6
-#define WIDTH 7
+#include "heuristics.h"
 
 class c4 {
 private:
