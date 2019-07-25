@@ -8,8 +8,9 @@ void startMCST() {
 	time_t start, elapsed;
 	mcst<c4> *tree = new mcst<c4>();
 	tree->getRoot()->getData()->display();
-	int turn = tree->getFirst();
-	while (!tree->getRoot()->getData()->result(tree->getFirst(), true)) {
+	bool first = tree->getFirst();
+	int turn = first;
+	while (!tree->getRoot()->getData()->result(first, true)) {
 		if (turn) {
 			start = time(nullptr);
 			tree->select();

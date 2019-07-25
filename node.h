@@ -15,7 +15,7 @@ private:
 	std::vector< node<T> *> children;
 
 	std::atomic<int> score, total;
-	short move;
+	U8 move;
 
 public:
 	node();
@@ -29,7 +29,7 @@ public:
 	std::vector< node<T> *> getChildren();
 	int getScore();
 	void setScore(int s);
-	int getMove();
+	U8 getMove();
 	void setMove(short m);
 
 	bool find(node<T> *n);

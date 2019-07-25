@@ -6,17 +6,19 @@
 #include <vector>
 
 #define U64 uint64_t
+#define U8 short
 #define HEIGHT 6
 #define WIDTH 7
 
 class c4 {
 private:
 	U64 curr, mask; 
-	int moves;
+	U8 moves;
+	bool zug;
 
-	U64 bottom_mask(int col);
-	U64 top_mask(int col);
-	bool playable(int col);
+	U64 bottom_mask(U8 col);
+	U64 top_mask(U8 col);
+	bool playable(U8 col);
 	bool alignment(U64 c);
 	bool draw(U64 c);
 	int evaluate(U64 c);
@@ -25,10 +27,12 @@ public:
 	c4();
 	~c4();
 
-	void play(int col);
-	int result(int t, bool p);
-	int heuristic(int t);
-	std::vector<short> possible();
+	void setZug(bool z);
+
+	void play(U8 col);
+	int result(bool t, bool p);
+	int heuristic(bool t);
+	std::vector<U8> possible();
 
 	void display();
 };

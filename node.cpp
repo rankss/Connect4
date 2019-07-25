@@ -67,7 +67,7 @@ void node<T>::setScore(int s) {
 }
 
 template <typename T>
-int node<T>::getMove() {
+U8 node<T>::getMove() {
 	return move;
 }
 

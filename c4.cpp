@@ -4,20 +4,21 @@ c4::c4() {
 	curr = 0;
 	mask = 0;
 	moves = 0;
+	zug = false;
 }
 
 c4::~c4() {
 }
 
-U64 c4::top_mask(int col) {
+U64 c4::top_mask(U8 col) {
 	return (U64(1) << (HEIGHT - 1) << col*(HEIGHT + 1));
 }
 
-U64 c4::bottom_mask(int col) {
+U64 c4::bottom_mask(U8 col) {
 	return (U64(1) << col*(HEIGHT + 1));
 }
 
-bool c4::playable(int col) {
+bool c4::playable(U8 col) {
 	return !(mask & top_mask(col));
 }
 
@@ -51,13 +52,17 @@ int c4::evaluate(U64 c) {
 	return 0;
 }
 
-void c4::play(int col) {
+void c4::setZug(bool z) {
+	zug = z;
+}
+
+void c4::play(U8 col) {
 	curr ^= mask;
 	mask |= mask + bottom_mask(col);
 	moves++;
 }
 
-int c4::result(int t, bool p) {
+int c4::result(bool t, bool p) {
 	U64 c = curr^mask;
 
 	if (alignment(c)) {
@@ -77,7 +82,7 @@ int c4::result(int t, bool p) {
 	return 0;
 }
 
-int c4::heuristic(int t) {
+int c4::heuristic(bool t) {
 	U64 c = curr^mask;
 	if (moves%2 == t)
 		return evaluate(c);
@@ -86,9 +91,9 @@ int c4::heuristic(int t) {
 	return 0;
 }
 
-std::vector<short> c4::possible() {
-	std::vector<short> moves;
-	for (short i = 0; i < WIDTH; i++)
+std::vector<U8> c4::possible() {
+	std::vector<U8> moves;
+	for (U8 i = 0; i < WIDTH; i++)
 		if (playable(i))
 			moves.push_back(i);
 
