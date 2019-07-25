@@ -27,7 +27,7 @@ public:
 
 	void play(U8 col);
 	int result(bool t, bool p);
-	int heuristic(bool t);
+	int heuristic();
 	std::vector<U8> possible();
 
 	void display();

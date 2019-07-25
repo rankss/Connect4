@@ -42,7 +42,7 @@ void test() {
 			tree->play();
 		}
 		tree->getRoot()->getData()->display();
-		cout << "row: " << tree->getRoot()->getData()->heuristic(first) << endl;
+		cout << "row: " << tree->getRoot()->getData()->heuristic() << endl;
 		turn++;
 		turn%=2;
 	}
