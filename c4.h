@@ -17,17 +17,17 @@ private:
 	bool playable(U8 col);
 	bool alignment(U64 c);
 	bool draw(U64 c);
-	int evaluate(U64 c);
 
 public:
 	c4();
 	~c4();
 
 	void setZug(bool z);
+	void switchZug();
 
 	void play(U8 col);
 	int result(bool t, bool p);
-	int heuristic();
+	int heuristic(U8 col);
 	std::vector<U8> possible();
 
 	void display();

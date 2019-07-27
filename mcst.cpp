@@ -4,6 +4,7 @@ template <typename T>
 mcst<T>::mcst() {
 	root = new node<T>();
 	first = rand() % 2;
+	root->getData()->setZug(!first);
 }
 
 template <typename T>
@@ -13,7 +14,7 @@ mcst<T>::~mcst() {
 
 template <typename T>
 void mcst<T>::playout(node<T> *n) {
-	int m, s, p = 1;
+	int m, s, p = P;
 	std::vector<U8> moves;
 	node<T> *c = nullptr;
 	while (p--) {

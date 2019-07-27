@@ -2,7 +2,7 @@
 #define HEURISTICS
 
 #include <cstdint>
-#include <vector>
+#include <algorithm>
 #include <iostream>
 
 #define U64 uint64_t
@@ -10,7 +10,10 @@
 #define HEIGHT 6
 #define WIDTH 7
 
-bool check(U64 mask, U8 col, U8 row);
+#define CLAIMEVEN_VALUE 10
+#define CREATETHREAT_VALUE 1000
+
 U8 threat(U64 mask, U64 s, U8 m);
+int claimEven(U8 col, U64 mask, bool zug);
 
 #endif

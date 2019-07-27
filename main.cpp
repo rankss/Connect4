@@ -13,6 +13,9 @@ void startMCST() {
 	while (!tree->getRoot()->getData()->result(first, true)) {
 		if (turn) {
 			start = time(nullptr);
+			for (U8 m : tree->getRoot()->getData()->possible()) {
+				cout << "move: " << m << " score: " << tree->getRoot()->getData()->heuristic(m) << endl;
+			}
 			tree->select();
 			elapsed = time(nullptr) - start;
 			if (elapsed != 0)
@@ -30,29 +33,35 @@ void startMCST() {
 	delete tree;
 }
 
-void test() {
-	mcst<c4> *tree = new mcst<c4>();
-	tree->getRoot()->getData()->display();
-	bool first = tree->getFirst();
-	int turn = first;
-	while (!tree->getRoot()->getData()->result(first, true)) {
-		if (turn) {
-			tree->play();
-		} else {
-			tree->play();
-		}
-		tree->getRoot()->getData()->display();
-		cout << "row: " << tree->getRoot()->getData()->heuristic() << endl;
-		turn++;
-		turn%=2;
-	}
+// void test() {
+// 	mcst<c4> *tree = new mcst<c4>();
+// 	tree->getRoot()->getData()->display();
+// 	bool first = tree->getFirst();
+// 	int turn = first;
+// 	while (!tree->getRoot()->getData()->result(first, true)) {
+// 		if (turn) {
+// 			for (U8 m : tree->getRoot()->getData()->possible()) {
+// 				cout << "move: " << m << " score: " << tree->getRoot()->getData()->heuristic(m) << endl;
+// 			}
+// 			tree->play();
+// 		} else {
+// 			for (U8 m : tree->getRoot()->getData()->possible()) {
+// 				cout << "move: " << m << " score: " << tree->getRoot()->getData()->heuristic(m) << endl;
+// 			}
+// 			tree->play();
+// 		}
+		
+// 		tree->getRoot()->getData()->display();
+// 		turn++;
+// 		turn%=2;
+// 	}
 	
-	delete tree;
-}
+// 	delete tree;
+// }
 
 int main() {
-	//srand(time(nullptr));
-	//startMCST();
-	test();
+	srand(time(nullptr));
+	startMCST();
+	//test();
 	return 0;
 }

@@ -46,14 +46,12 @@ bool c4::draw(U64 c) {
 	return false;
 }
 
-int c4::evaluate(U64 c) {
-	if (alignment(c))
-		return 100;
-	return 0;
-}
-
 void c4::setZug(bool z) {
 	zug = z;
+}
+
+void c4::switchZug() {
+	zug = !zug;
 }
 
 void c4::play(U8 col) {
@@ -82,9 +80,9 @@ int c4::result(bool t, bool p) {
 	return 0;
 }
 
-int c4::heuristic() {
+int c4::heuristic(U8 col) {
 	U64 c = curr^mask;
-	return threat(mask, c, moves);
+	return claimEven(col, mask, zug);
 }
 
 std::vector<U8> c4::possible() {

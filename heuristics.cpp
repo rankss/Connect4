@@ -1,53 +1,139 @@
 #include "heuristics.h"
 
-bool check(U64 mask, U8 col, U8 row) {
-	return !((U64(1) << (col*WIDTH + row)) & mask);
+bool placeable(U64 mask, U8 col, U8 row) {
+	return !((U64(1) << (col*WIDTH + (row-1))) & mask);
+}
+
+U8 left(U64 mask, U64 s, U64 triple, int _left, U8 row, U8 m) {
+	if ((triple & s) == triple) {
+		if (_left >= 0 && row > 0 && row <= HEIGHT && placeable(mask, _left, row) && (row)%2 == m%2)
+			return row;
+	}
+	return 255;
+}
+
+U8 right(U64 mask, U64 s, U64 triple, int _right, U8 row, U8 m) {
+	if ((triple & s) == triple) {
+		if (_right < WIDTH && row > 0 && row <= HEIGHT && placeable(mask, _right, row) && (row)%2 == m%2)
+			return row;
+	}
+	return 255;
+}
+
+U8 middle(U64 mask, U64 s, U64 triple, int _middle, U8 row, U8 m) {
+	if ((triple & s) == triple) {
+		if (placeable(mask, _middle, row) && (row)%2 == m%2)
+			return row;
+	}
+	return 255;
 }
 
 // Detects even/odd threat depending on move count and returns row
 U8 threat(U64 mask, U64 s, U8 m) {
-	U64 triple = 0; 
-	U8 left, right, i, j;
+	U64 triple[9] = {16513, 2113537, 2097281, 65793, 16842753, 16777473, 16644, 2097672, 2129928}; // Magic digits
+	U8 _left, _right, _middle, min = 255;
+	int i;
 
-	// Horizontal
-	for (i = 0; i < WIDTH-2; i++) {
-		for (j = 0; j < HEIGHT; j++) {
-			triple = 16513; // Magic number
-			triple <<= (i*WIDTH)+j; // Shifting
-			if ((triple & s) == triple) {
-				left = i-1, right = i+3; // Also magic
-				if (left >= 0 && check(mask, left, j) && (j+1)%2 == m%2)
-					return j+1;
-				if (right < WIDTH && check(mask, right, j) && (j+1)%2 == m%2)
-					return j+1;
-			}
+	/* Horizontal */
+	i = 0;
+	while (i <= 33) {
+		_left = left(mask, s, triple[0], (i/WIDTH)-1, (i%WIDTH)+1, m);
+		_right = right(mask, s, triple[0], (i/WIDTH)+3, (i%WIDTH)+1, m);
+		min = std::min({min, _left, _right});
+		triple[0] <<= 1, i++;
+
+		if (i%WIDTH == 6)
+			triple[0] <<= 1, i++;
+	}
+
+	i = 0;
+	while (i <= 26) {
+		_middle = middle(mask, s, triple[1], (i/WIDTH)+1, (i%WIDTH)+1, m);
+		min = std::min({min, _middle});
+		triple[1] <<= 1;
+
+
+		_middle = middle(mask, s, triple[2], (i/WIDTH)+2, (i%WIDTH)+1, m);
+		min = std::min({min, _middle});
+		triple[2] <<= 1, i++;
+
+		if (i%WIDTH == 6) {
+			triple[1] <<= 1;
+			triple[2] <<= 1, i++;
 		}
 	}
 
-	// Diagonals
-	for (i = 0; i < WIDTH-2; i++) {
-		for (j = 0; j < HEIGHT-2; j++) {
-			triple = 65793; // Magic number | left to right diagonal
-			triple <<= (i*WIDTH)+j;
-			if ((triple & s) == triple) {
-				left = i-1, right = i+3; // Also magic
-				if (left >= 0 && (j-1) >= 0 && check(mask, left, j-1) && (j)%2 == m%2)
-					return j;
-				if (right < WIDTH && (j+3) < HEIGHT && check(mask, right, j+3) && (j+4)%2 == m%2)
-					return j+4;
-			}
+	/* Diagonal */
+	i = 0;
+	while (i <= 31) {
+		_left = left(mask, s, triple[3], (i/WIDTH)-1, (i%WIDTH), m);
+		_right = right(mask, s, triple[3], (i/WIDTH)+3, (i%WIDTH)+4, m);
+		min = std::min({min, _left, _right});
+		triple[3] <<= 1;
 
-			triple = 16644; // Magic number | right to left diagonal
-			triple <<= (i*WIDTH)+j;
-			if ((triple & s) == triple) {
-				left = i-1, right = i+3; // Also magic
-				if (left >= 0 && (j+3) < HEIGHT && check(mask, left, j+3) && (j+4)%2 == m%2)
-					return j+4;
-				if (right < WIDTH && (j-1) >= 0 && check(mask, right, j-1) && (j)%2 == m%2)
-					return j;
-			}
+		_left = left(mask, s, triple[6], (i/WIDTH)-1, (i%WIDTH)+4, m);
+		_right = right(mask, s, triple[6], (i/WIDTH)+3, (i%WIDTH), m);
+		min = std::min({min, _left, _right});
+		triple[6] <<= 1, i++;
+		
+
+		if (i%WIDTH == 4) {
+			triple[3] <<= 3;
+			triple[6] <<= 3, i+=3;
 		}
 	}
 
+	i = 0;
+	while (i <= 23) {
+		_middle = middle(mask, s, triple[4], (i/WIDTH)+1, (i%WIDTH)+2, m);
+		min = std::min({min, _middle});
+		triple[4] <<= 1;
+
+		_middle = middle(mask, s, triple[5], (i/WIDTH)+2, (i%WIDTH)+3, m);
+		min = std::min({min, _middle});
+		triple[5] <<= 1;
+
+		_middle = middle(mask, s, triple[7], (i/WIDTH)+2, (i%WIDTH)+2, m);
+		min = std::min({min, _middle});
+		triple[7] <<= 1;
+
+		_middle = middle(mask, s, triple[8], (i/WIDTH)+1, (i%WIDTH)+3, m);
+		min = std::min({min, _middle});
+		triple[8] <<= 1, i++;
+
+		if (i%WIDTH == 3) {
+			triple[4] <<= 4;
+			triple[5] <<= 4;
+			triple[7] <<= 4;
+			triple[8] <<= 4, i+=4;
+		}
+	}
+
+	if (min <= HEIGHT) {
+		return min;
+	}
+
+	return 0;
+}
+
+// Createthreat
+int createThreat(mask, s, m) {
+	if (threat(mask, s, m))
+		return CREATETHREAT_VALUE;
+	return 0;
+}
+
+// Rule 1: Claimeven
+int claimEven(U8 col, U64 mask, bool zug) {
+	U64 column = (U64(63) << col*WIDTH) & mask;
+	U64 spot = U64(1) << col*WIDTH;
+	U8 i = 1, h;
+	if (zug) {
+		while ((spot | column) == column)
+			spot <<= 1, i++;
+		h = (col*WIDTH + i)%WIDTH;
+		if (h < HEIGHT && h%2 == 0)
+			return CLAIMEVEN_VALUE;
+	}
 	return 0;
 }
