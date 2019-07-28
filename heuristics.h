@@ -11,9 +11,12 @@
 #define WIDTH 7
 
 #define CLAIMEVEN_VALUE 10
-#define CREATETHREAT_VALUE 1000
+#define THREAT_VALUE 1000
 
 U8 threat(U64 mask, U64 s, U8 m);
+bool columns(U64 mask, U8 track[], bool t);
+
 int claimEven(U8 col, U64 mask, bool zug);
+
 
 #endif

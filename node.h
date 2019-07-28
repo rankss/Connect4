@@ -30,8 +30,8 @@ public:
 	int getScore();
 	void setScore(int s);
 	U8 getMove();
-	void setMove(short m);
 
+	void play(U8 col);
 	bool find(node<T> *n);
 };
 

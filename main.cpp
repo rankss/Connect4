@@ -13,10 +13,8 @@ void startMCST() {
 	while (!tree->getRoot()->getData()->result(first, true)) {
 		if (turn) {
 			start = time(nullptr);
-			for (U8 m : tree->getRoot()->getData()->possible()) {
-				cout << "move: " << m << " score: " << tree->getRoot()->getData()->heuristic(m) << endl;
-			}
 			tree->select();
+			tree->getRoot()->getData()->heuristic(first);
 			elapsed = time(nullptr) - start;
 			if (elapsed != 0)
 				cout << "Move took: " << elapsed << " seconds. Playouts per second per legal move: " << float(P/elapsed) << "." << endl;
@@ -24,6 +22,7 @@ void startMCST() {
 				cout << "Move took: " << elapsed << " seconds. Playouts cannot be measured." << endl;
 		} else {
 			tree->play();
+			tree->getRoot()->getData()->heuristic(first);
 		}
 		tree->getRoot()->getData()->display();
 		turn++;

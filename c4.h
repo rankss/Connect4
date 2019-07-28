@@ -8,8 +8,9 @@
 
 class c4 {
 private:
-	U64 curr, mask; 
+	U64 curr, mask;
 	U8 moves;
+	U8 track[WIDTH];
 	bool zug;
 
 	U64 bottom_mask(U8 col);
@@ -18,16 +19,22 @@ private:
 	bool alignment(U64 c);
 	bool draw(U64 c);
 
+	void getZug();
+	void giveZug();
+
+	int heuristic_fp();
+	int heuristic_sp();
+
 public:
 	c4();
 	~c4();
 
 	void setZug(bool z);
-	void switchZug();
 
 	void play(U8 col);
 	int result(bool t, bool p);
-	int heuristic(U8 col);
+	int heuristic(bool t);
+
 	std::vector<U8> possible();
 
 	void display();

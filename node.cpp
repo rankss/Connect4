@@ -72,8 +72,9 @@ U8 node<T>::getMove() {
 }
 
 template <typename T>
-void node<T>::setMove(short m) {
-	move = m;
+void node<T>::play(U8 col) {
+	move = col;
+	data->play(col);
 }
 
 template <typename T>

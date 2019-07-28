@@ -28,6 +28,7 @@ U8 middle(U64 mask, U64 s, U64 triple, int _middle, U8 row, U8 m) {
 	return 255;
 }
 
+// Non Zugswang heuristic
 // Detects even/odd threat depending on move count and returns row
 U8 threat(U64 mask, U64 s, U8 m) {
 	U64 triple[9] = {16513, 2113537, 2097281, 65793, 16842753, 16777473, 16644, 2097672, 2129928}; // Magic digits
@@ -116,13 +117,17 @@ U8 threat(U64 mask, U64 s, U8 m) {
 	return 0;
 }
 
-// Createthreat
-int createThreat(mask, s, m) {
-	if (threat(mask, s, m))
-		return CREATETHREAT_VALUE;
-	return 0;
+bool columns(U64 mask, U8 track[], bool t) {
+	for (U8 i = 0; i < WIDTH; i++) {
+		std::cout << track[i] << std::endl;
+		if ((6-track[i])%2 != t)
+			return false;
+	}
+
+	return true;
 }
 
+// Zugswang heuristic
 // Rule 1: Claimeven
 int claimEven(U8 col, U64 mask, bool zug) {
 	U64 column = (U64(63) << col*WIDTH) & mask;
@@ -137,3 +142,4 @@ int claimEven(U8 col, U64 mask, bool zug) {
 	}
 	return 0;
 }
+

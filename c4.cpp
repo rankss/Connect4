@@ -4,6 +4,7 @@ c4::c4() {
 	curr = 0;
 	mask = 0;
 	moves = 0;
+	std::memset(track, 0, sizeof(track));
 	zug = false;
 }
 
@@ -46,18 +47,30 @@ bool c4::draw(U64 c) {
 	return false;
 }
 
-void c4::setZug(bool z) {
-	zug = z;
+void c4::getZug() {
+	if (!zug) {
+		zug = true;
+		std::cout << "AI gain control of Zugswang" << std::endl;
+	}
+	
 }
 
-void c4::switchZug() {
-	zug = !zug;
+void c4::giveZug() {
+	if (zug) {
+		zug = false;
+		std::cout << "AI lost control of Zugswang" << std::endl;
+	}
+}
+
+void c4::setZug(bool z) {
+	zug = z;
 }
 
 void c4::play(U8 col) {
 	curr ^= mask;
 	mask |= mask + bottom_mask(col);
 	moves++;
+	track[col]++;
 }
 
 int c4::result(bool t, bool p) {
@@ -80,9 +93,34 @@ int c4::result(bool t, bool p) {
 	return 0;
 }
 
-int c4::heuristic(U8 col) {
+int c4::heuristic_fp() {
 	U64 c = curr^mask;
-	return claimEven(col, mask, zug);
+	if (threat(mask, c, moves))
+		getZug();
+	else
+		giveZug();
+
+	if (zug) {
+		// do zug things
+	} else {
+		// do things to get zug
+	}
+	return 0;
+}
+
+int c4::heuristic_sp() {
+	U64 c = curr^mask;
+	if (zug) {
+		// do zug things
+	} else {
+		// do things to get zug
+	}
+	return 0;
+}
+
+int c4::heuristic(bool t) {
+	if (t) return heuristic_fp();
+	else return heuristic_sp();
 }
 
 std::vector<U8> c4::possible() {

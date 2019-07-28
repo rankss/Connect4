@@ -26,7 +26,7 @@ void mcst<T>::playout(node<T> *n) {
 			moves = c->getData()->possible(); // Get all possible moves
 			if (moves.empty()) break;
 			m = moves[rand() % moves.size()]; // Select random move
-			c->getData()->play(m); // Play move
+			c->play(m); // Play move
 			c->setScore(c->getData()->result(first, false));
 			s = c->getScore();
 		}
@@ -40,18 +40,11 @@ void mcst<T>::populate() {
 	node<T> *n = nullptr;
 	for (U8 m : root->getData()->possible()) {
 		n = new node<T>(*root);
-		n->getData()->play(m);
-		n->setMove(m);
+		n->play(m);
 
 		n->setScore(n->getData()->result(first, false));
 		if (!n->getScore())
 			playout(n);
-		else {
-			if (n->getScore() > 0) {
-				root->setChild(n);
-				break;
-			}
-		}
 
 		if (n->getScore() >= max) {
 			max = n->getScore();
@@ -99,10 +92,11 @@ void mcst<T>::play() {
 	std::cout << "Player's turn" << std::endl;
 
 	U8 m;
+	std::cout << "Please choose a move: ";
 	while (std::cin >> m && std::find(moves.begin(), moves.end(), m) == moves.end())
 		std::cout << "Please choose a valid move: ";
 
-	root->getData()->play(m);
+	root->play(m);
 }
 
 template class mcst<c4>;
