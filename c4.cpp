@@ -109,7 +109,12 @@ int c4::heuristic_fp() {
 }
 
 int c4::heuristic_sp() {
-	U64 c = curr^mask;
+	U64 c = curr;
+	if (threat(mask, c, moves-1))
+		giveZug();
+	else
+		getZug();
+
 	if (zug) {
 		// do zug things
 	} else {

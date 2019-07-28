@@ -22,9 +22,6 @@ private:
 	void getZug();
 	void giveZug();
 
-	int heuristic_fp();
-	int heuristic_sp();
-
 public:
 	c4();
 	~c4();
@@ -33,6 +30,8 @@ public:
 
 	void play(U8 col);
 	int result(bool t, bool p);
+	int heuristic_fp();
+	int heuristic_sp();
 	int heuristic(bool t);
 
 	std::vector<U8> possible();
