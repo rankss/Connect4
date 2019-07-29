@@ -95,32 +95,50 @@ int c4::result(bool t, bool p) {
 
 int c4::heuristic_fp() {
 	U64 c = curr^mask;
-	if (threat(mask, c, moves))
+	int score = 0;
+	if (threat(mask, c, moves)) {
 		getZug();
-	else
+		score += 50;
+	}
+	else {
 		giveZug();
+	}
+
+	if (threat(mask, c^mask, moves-1)) {
+		score -= 50;
+	}
 
 	if (zug) {
 		// do zug things
 	} else {
 		// do things to get zug
 	}
-	return 0;
+	return score;
 }
 
 int c4::heuristic_sp() {
 	U64 c = curr;
-	if (threat(mask, c, moves-1))
+	int score = 0;
+	if (threat(mask, c, moves-1)) {
 		giveZug();
-	else
+		score -= 50
+	}
+	else {
 		getZug();
+		score += 50;
+	}
+
+	if (threat(mask, c^mask, moves)) {
+		score += 50
+	}
 
 	if (zug) {
 		// do zug things
 	} else {
 		// do things to get zug
 	}
-	return 0;
+
+	return score;
 }
 
 int c4::heuristic(bool t) {

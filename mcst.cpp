@@ -14,7 +14,8 @@ mcst<T>::~mcst() {
 
 template <typename T>
 void mcst<T>::playout(node<T> *n) {
-	int m, s, p = P;
+	int s, p = P;
+	U8 m;
 	std::vector<U8> moves;
 	node<T> *c = nullptr;
 	while (p--) {

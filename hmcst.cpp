@@ -15,8 +15,27 @@ hmcst<T>::~hmcst() {
 template <typename T>
 void hmcst<T>::playout(node<T> *n) {
 	// Do playouts based on a probability of each move being selected
-	
+	int pr, s, p = P, total, i;
+	U8 m;
+	std::vector<U8> moves;
+	node<T> *c = nullptr;
+	while (p--) {
+		c = new node<T>(*n);
+		n->setChild(c);
+		total = 0;
+		std::vector<int> probability;
+		while (c->move_heuristic(first) < 50) {
+			moves = c->getData()->possible();
+			for (m : moves) {
+				probability.push_back(total);
+				total += c->getData()->move_heuristic(m);
+			}
+			pr = rand() % total;
+			m = moves[std::lower_bound(probability.begin(), probability.end(), pr)];
 
+			c->play(m);
+		}
+	}
 }
 
 template <typename T>

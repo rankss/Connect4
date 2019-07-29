@@ -1,6 +1,8 @@
 #ifndef HMCST
 #define HMCST
 
+#include <cstdlib>
+#include <algorithm>
 #include "node.h"
 
 template <typename T>
