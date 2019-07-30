@@ -34,22 +34,21 @@ void startMCST() {
 }
 
 void startMinimax() {
+	time_t start, elapsed;
 	minimax<c4> *tree = new minimax<c4>();
 	tree->getRoot()->getData()->display();
 	bool first = tree->getFirst();
-	cout << first << endl;
-	tree->select();
-	// tree->getRoot()->getData()->display();
-	// tree->select();
-	// tree->getRoot()->getData()->display();
-	// tree->select();
-	// tree->getRoot()->getData()->display();
-	// tree->select();
-	// tree->getRoot()->getData()->display();
-	// tree->select();
-	// tree->getRoot()->getData()->display();
-	// tree->select();
-	// tree->getRoot()->getData()->display();
+	int turn = first;
+	while (!tree->getRoot()->getData()->result(first, true)) {
+		if (turn) {
+			tree->select();
+		} else {
+			tree->play();
+		}
+		tree->getRoot()->getData()->display();
+		turn++;
+		turn%=2;
+	}
 	delete tree;
 }
 

@@ -16,9 +16,9 @@ void minimax<T>::populate(node<T> *n, int d) {
 	// Populates tree until depth d
 	if (d == 0 || n->getData()->result(first, false)) return;
 
-	// if (n->getChildren().size() > 0)
-	// 	for (node<T> *child : n->getChildren())
-	// 		populate(child, d - 1);
+	if (n->getChildren().size() > 0)
+		for (node<T> *child : n->getChildren())
+			populate(child, d - 1);
 
 	node<T> *c;
 	for (int m : root->getData()->possible()) {
@@ -37,18 +37,18 @@ int minimax<T>::iterate() {
 }
 
 template <typename T>
-int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer) {
+int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first) {
 	if (n->getChildren().empty()) {
-		n->getData()->display();
-		std::cout << n->getData()->heuristic(maxPlayer) << std::endl;
-		return n->getData()->heuristic(maxPlayer);
+		// n->getData()->display();
+		// std::cout << n->getData()->heuristic(first) << std::endl;
+		return n->getData()->heuristic(first);
 	}
 
 	int value;
 	if (maxPlayer) {
 		value = INT_MIN;
 		for (node<T> *c : n->getChildren()) {
-			value = std::max(value, alphabeta(c, a, b, !maxPlayer));
+			value = std::max(value, alphabeta(c, a, b, !maxPlayer, first));
 			a = std::max(a, value);
 			n->setScore(a);
 			if (a >= b) break;
@@ -56,7 +56,7 @@ int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer) {
 	} else {
 		value = INT_MAX;
 		for (node<T> *c : n->getChildren()) {
-			value = std::min(value, alphabeta(c, a, b, !maxPlayer));
+			value = std::min(value, alphabeta(c, a, b, !maxPlayer, first));
 			b = std::min(b, value);
 			n->setScore(b);
 			if (a >= b) break;
@@ -79,17 +79,10 @@ bool minimax<T>::getFirst() {
 template <typename T>
 void minimax<T>::select() {
 	// AI move
-	populate(root, 3);
-	int s = alphabeta(root, INT_MIN, INT_MAX, first);
+	populate(root, 8);
+	int s = alphabeta(root, INT_MIN, INT_MAX, first, first);
 	int idx = root->find(s);
-	for (uint i = 0; i < root->getChildren().size(); i++) {
-		if (int(i) != idx) {
-			delete root->getChildren()[i];
-		}
-	}
-	node<T> *n = root->getChildren()[idx];
-	std::vector <node <T> *> v;
-	root->setChildren(v);
+	node<T> *n = new node<c4>(*root->getChildren()[idx]);
 	delete root;
 	root = n;
 }
@@ -97,6 +90,15 @@ void minimax<T>::select() {
 template <typename T>
 void minimax<T>::play() {
 	// Player move
+	std::vector<U8> moves = root->getData()->possible();
+	std::cout << "Player's turn" << std::endl;
+
+	U8 m;
+	std::cout << "Please choose a move: ";
+	while (std::cin >> m && std::find(moves.begin(), moves.end(), m) == moves.end())
+		std::cout << "Please choose a valid move: ";
+
+	root->play(m);
 }
 
 template class minimax<c4>;

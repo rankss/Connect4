@@ -96,7 +96,7 @@ int c4::result(bool t, bool p) {
 int c4::heuristic_fp() {
 	U64 c = curr^mask;
 	int score = 0;
-	std::cout << "First player heurtistic" << std::endl;
+	//std::cout << "First player heurtistic" << std::endl;
 	if (threat(mask, c, moves)) {
 		getZug();
 		score += 50;
@@ -109,8 +109,8 @@ int c4::heuristic_fp() {
 		score -= 50;
 	}
 
-	if (alignment(c)) score += 100;
-	if (alignment(curr)) score -= 100;
+	if (alignment(c)) score += 1000;
+	if (alignment(curr)) score -= 1000;
 
 	return score;
 }
@@ -118,7 +118,7 @@ int c4::heuristic_fp() {
 int c4::heuristic_sp() {
 	U64 c = curr;
 	int score = 0;
-	std::cout << "Second player heurtistic" << std::endl;
+	//std::cout << "Second player heurtistic" << std::endl;
 	if (threat(mask, c, moves-1)) {
 		giveZug();
 		score -= 50;
@@ -132,8 +132,8 @@ int c4::heuristic_sp() {
 		score += 50;
 	}
 
-	if (alignment(c)) score -= 100;
-	if (alignment(c^mask)) score += 100;
+	if (alignment(c)) score -= 1000;
+	if (alignment(c^mask)) score += 1000;
 
 	return score;
 }
