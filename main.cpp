@@ -1,5 +1,6 @@
 #include <ctime>
 #include "mcst.h"
+#include "minimax.h"
 
 using namespace std;
 
@@ -32,6 +33,16 @@ void startMCST() {
 	delete tree;
 }
 
+void startMinimax() {
+	minimax<c4> *tree = new minimax<c4>();
+	tree->getRoot()->getData()->display();
+	bool first = tree->getFirst();
+	cout << first << endl;
+	tree->select();
+	tree->getRoot()->getData()->display();
+	delete tree;
+}
+
 // void test() {
 // 	mcst<c4> *tree = new mcst<c4>();
 // 	tree->getRoot()->getData()->display();
@@ -59,8 +70,9 @@ void startMCST() {
 // }
 
 int main() {
-	srand(time(nullptr));
-	startMCST();
+	//srand(time(nullptr));
+	//startMCST();
+	startMinimax();
 	//test();
 	return 0;
 }

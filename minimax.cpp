@@ -23,7 +23,8 @@ void minimax<T>::populate(node<T> *n, int d) {
 	node<T> *c;
 	for (int m : root->getData()->possible()) {
 		c = new node<T>(*n);
-		c->getData()->play(m);
+		c->play(m);
+		//c->getData()->display();
 		n->addChild(c);
 		populate(c, d - 1);
 	}
@@ -36,23 +37,25 @@ int minimax<T>::iterate() {
 }
 
 template <typename T>
-int minimax<T>::alphabeta(node<T> *n, int a, int b) {
+int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer) {
 	if (n->getChildren().empty())
-		return n->getData()->heuristic(first);
+		return n->getData()->heuristic(maxPlayer);
 
 	int value;
-	if (first) {
+	if (maxPlayer) {
 		value = INT_MIN;
 		for (node<T> *c : n->getChildren()) {
-			value = std::max(value, alphabeta(c, a, b));
+			value = std::max(value, alphabeta(c, a, b, !maxPlayer));
 			a = std::max(a, value);
+			n->setScore(a);
 			if (a >= b) break;
 		}
 	} else {
 		value = INT_MAX;
 		for (node<T> *c : n->getChildren()) {
-			value = std::min(value, alphabeta(c, a, b));
+			value = std::min(value, alphabeta(c, a, b, !maxPlayer));
 			b = std::min(b, value);
+			n->setScore(b);
 			if (a >= b) break;
 		}
 	}
@@ -73,12 +76,20 @@ bool minimax<T>::getFirst() {
 template <typename T>
 void minimax<T>::select() {
 	// AI move
-	populate(root, 8);
-	for (node<T> *c : root->getChildren()) {
-		c->setScore(alphabeta(c, INT_MIN, INT_MAX));
-		std::cout << c->getScore();
+	populate(root, 4);
+	int s = alphabeta(root, INT_MIN, INT_MAX, first);
+	int idx = root->find(s);
+	for (uint i = 0; i < root->getChildren().size(); i++) {
+		if (int(i) != idx) {
+			std::cout << root->getChildren()[i]->getScore() << std::endl;
+			delete root->getChildren()[i];
+		}
 	}
-
+	node<T> *n = root->getChildren()[idx];
+	std::vector <node <T> *> v;
+	root->setChildren(v);
+	delete root;
+	root = n;
 }
 
 template <typename T>

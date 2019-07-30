@@ -57,6 +57,11 @@ std::vector< node<T> *> node<T>::getChildren() {
 }
 
 template <typename T>
+void node<T>::setChildren(std::vector< node<T> *> v) {
+	children = v;
+}
+
+template <typename T>
 int node<T>::getScore() {
 	return score;
 }
@@ -78,8 +83,13 @@ void node<T>::play(U8 col) {
 }
 
 template <typename T>
-bool node<T>::find(node<T> *n) {
-	return (std::find(children.begin(), children.end(), n) != children.end());
+int node<T>::find(int s) {
+	for (uint i = 0; i < children.size(); i++) {
+		if (children[i]->getScore() == s) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 template class node<c4>;

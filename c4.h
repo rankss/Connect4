@@ -33,6 +33,7 @@ public:
 	int heuristic_fp();
 	int heuristic_sp();
 	int heuristic(bool t);
+	int move_heuristic(bool t);
 
 	std::vector<U8> possible();
 

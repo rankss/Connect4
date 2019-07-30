@@ -96,6 +96,7 @@ int c4::result(bool t, bool p) {
 int c4::heuristic_fp() {
 	U64 c = curr^mask;
 	int score = 0;
+	//std::cout << "First player heurtistic" << std::endl;
 	if (threat(mask, c, moves)) {
 		getZug();
 		score += 50;
@@ -108,20 +109,19 @@ int c4::heuristic_fp() {
 		score -= 50;
 	}
 
-	if (zug) {
-		// do zug things
-	} else {
-		// do things to get zug
-	}
+	if (alignment(c)) score += 100;
+	if (alignment(curr)) score -= 100;
+
 	return score;
 }
 
 int c4::heuristic_sp() {
 	U64 c = curr;
 	int score = 0;
+	//std::cout << "Second player heurtistic" << std::endl;
 	if (threat(mask, c, moves-1)) {
 		giveZug();
-		score -= 50
+		score -= 50;
 	}
 	else {
 		getZug();
@@ -129,29 +129,22 @@ int c4::heuristic_sp() {
 	}
 
 	if (threat(mask, c^mask, moves)) {
-		score += 50
+		score += 50;
 	}
 
-	if (zug) {
-		// do zug things
-	} else {
-		// do things to get zug
-	}
+	if (alignment(c)) score -= 100;
+	if (alignment(c^mask)) score += 100;
 
 	return score;
 }
 
 int c4::heuristic(bool t) {
-	if (t) return heuristic_fp();
+	if (moves%2 == t) return heuristic_fp();
 	else return heuristic_sp();
 }
 
 std::vector<U8> c4::possible() {
-	std::vector<U8> moves;
-	for (U8 i = 0; i < WIDTH; i++)
-		if (playable(i))
-			moves.push_back(i);
-
+	std::vector<U8> moves = {3,4,2,5,1,6,0};
 	return moves;
 }
 

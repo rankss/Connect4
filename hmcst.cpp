@@ -22,9 +22,9 @@ void hmcst<T>::playout(node<T> *n) {
 	while (p--) {
 		c = new node<T>(*n);
 		n->setChild(c);
-		total = 0;
+		total = 0, s = 0;
 		std::vector<int> probability;
-		while (c->move_heuristic(first) < 50) {
+		while (s < 50 || !c->getData()->result(first, false)) {
 			moves = c->getData()->possible();
 			for (m : moves) {
 				probability.push_back(total);
@@ -32,7 +32,8 @@ void hmcst<T>::playout(node<T> *n) {
 			}
 			pr = rand() % total;
 			m = moves[std::lower_bound(probability.begin(), probability.end(), pr)];
-
+			s += c->getData()->heuristic(first);
+			c->setScore(s);
 			c->play(m);
 		}
 	}

@@ -142,4 +142,3 @@ int claimEven(U8 col, U64 mask, bool zug) {
 	}
 	return 0;
 }
-

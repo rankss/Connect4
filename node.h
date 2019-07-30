@@ -27,12 +27,13 @@ public:
 	void setChild(node<T> *n);
 	void addChild(node<T> *n);
 	std::vector< node<T> *> getChildren();
+	void setChildren(std::vector< node<T> *> v);
 	int getScore();
 	void setScore(int s);
 	U8 getMove();
 
 	void play(U8 col);
-	bool find(node<T> *n);
+	int find(int s);
 };
 
 #endif
