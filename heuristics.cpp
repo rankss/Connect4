@@ -142,3 +142,26 @@ int claimEven(U8 col, U64 mask, bool zug) {
 	}
 	return 0;
 }
+
+int vertical(U64 mask, U64 s, U8 col) {
+	U64 two = U64(3) << (col*WIDTH);
+	U64 three = U64(7) << (col*WIDTH);
+
+	int i = 0;
+	while (i+3 <= 5) {
+		if ((three & s) == three && placeable(mask, col, i+4)) {
+			return 10;
+		}
+
+		// std::cout << two << " stuff "<< (two & s) << std::endl;
+		// std::cout << "column " << col << std::endl;
+		// std::cout << "playable " << placeable(mask, col, i+3) << std::endl;
+		if ((two & s) == two && placeable(mask, col, i+3)) {
+			return 5;
+		}
+		three <<= 1;
+		two <<= 1;
+		i++;
+	}
+	return 0;
+}

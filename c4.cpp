@@ -109,8 +109,13 @@ int c4::heuristic_fp() {
 		score -= 50;
 	}
 
-	if (alignment(c)) score += 1000;
-	if (alignment(curr)) score -= 1000;
+	for (int i = 0; i < WIDTH; i++) {
+		score += vertical(mask, c, i);
+		score -= vertical(mask, c^mask, i);
+	}
+
+	if (alignment(c)) return 1000;
+	if (alignment(c^mask)) return -1000;
 
 	return score;
 }
@@ -132,8 +137,13 @@ int c4::heuristic_sp() {
 		score += 50;
 	}
 
-	if (alignment(c)) score -= 1000;
-	if (alignment(c^mask)) score += 1000;
+	for (int i = 0; i < WIDTH; i++) {
+		score += vertical(mask, c^mask, i);
+		score -= vertical(mask, c, i);
+	}
+
+	if (alignment(c)) return 1000;
+	if (alignment(c^mask)) return -1000;
 
 	return score;
 }

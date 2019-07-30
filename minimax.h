@@ -15,6 +15,7 @@ private:
 	void populate(node<T> *n, int d);
 	int iterate();
 	int alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first);
+	int backpropagate(node<T> *n, bool maxPlayer, bool first);
 
 public:
 	minimax();

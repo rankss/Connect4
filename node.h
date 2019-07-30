@@ -33,7 +33,7 @@ public:
 	U8 getMove();
 
 	void play(U8 col);
-	int find(int s);
+	int find();
 };
 
 #endif

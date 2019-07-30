@@ -83,13 +83,16 @@ void node<T>::play(U8 col) {
 }
 
 template <typename T>
-int node<T>::find(int s) {
+int node<T>::find() {
+	int m = -10000000, idx = -1;
 	for (uint i = 0; i < children.size(); i++) {
-		if (children[i]->getScore() == s) {
-			return i;
+		std::cout << children[i]->getMove() << " score " << children[i]->getScore() << std::endl;
+		if (children[i]->getScore() > m) {
+			m = children[i]->getScore();
+			idx = i;
 		}
 	}
-	return -1;
+	return idx;
 }
 
 template class node<c4>;

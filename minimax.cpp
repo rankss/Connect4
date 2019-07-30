@@ -14,7 +14,10 @@ minimax<T>::~minimax() {
 template <typename T>
 void minimax<T>::populate(node<T> *n, int d) {
 	// Populates tree until depth d
-	if (d == 0 || n->getData()->result(first, false)) return;
+	if (d == 0 || n->getData()->result(first, false)) {
+		//n->getData()->display();
+		return;
+	}
 
 	if (n->getChildren().size() > 0)
 		for (node<T> *child : n->getChildren())
@@ -39,8 +42,8 @@ int minimax<T>::iterate() {
 template <typename T>
 int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first) {
 	if (n->getChildren().empty()) {
-		// n->getData()->display();
-		// std::cout << n->getData()->heuristic(first) << std::endl;
+		//n->getData()->display();
+		//std::cout << n->getData()->heuristic(first) << std::endl;
 		return n->getData()->heuristic(first);
 	}
 
@@ -48,7 +51,7 @@ int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first) 
 	if (maxPlayer) {
 		value = INT_MIN;
 		for (node<T> *c : n->getChildren()) {
-			value = std::max(value, alphabeta(c, a, b, !maxPlayer, first));
+			value = std::max(value, alphabeta(c, a, b, false, first));
 			a = std::max(a, value);
 			n->setScore(a);
 			if (a >= b) break;
@@ -56,7 +59,7 @@ int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first) 
 	} else {
 		value = INT_MAX;
 		for (node<T> *c : n->getChildren()) {
-			value = std::min(value, alphabeta(c, a, b, !maxPlayer, first));
+			value = std::min(value, alphabeta(c, a, b, true, first));
 			b = std::min(b, value);
 			n->setScore(b);
 			if (a >= b) break;
@@ -79,9 +82,20 @@ bool minimax<T>::getFirst() {
 template <typename T>
 void minimax<T>::select() {
 	// AI move
-	populate(root, 8);
-	int s = alphabeta(root, INT_MIN, INT_MAX, first, first);
-	int idx = root->find(s);
+
+	populate(root, 7);
+	alphabeta(root, INT_MIN, INT_MAX, first, first);
+	for (node<T> *c : root->getChildren()) {
+		if (c->getChildren().empty()) {
+			// Winning move
+			std::cout << "here" << std::endl;
+			node<T> *n = new node<c4>(*c);
+			delete root;
+			root = n;
+			return;
+		}
+	}
+	int idx = root->find();
 	node<T> *n = new node<c4>(*root->getChildren()[idx]);
 	delete root;
 	root = n;
