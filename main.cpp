@@ -21,8 +21,10 @@ void startMCST() {
 			else
 				cout << "Move took: " << elapsed << " seconds. Playouts cannot be measured." << endl;
 		} else {
+			for (int i = 0; i < 7; i++)
+				cout << tree->getRoot()->getData()->heuristic(i) << " ";
+			cout << endl;
 			tree->play();
-			tree->getRoot()->getData()->heuristic(first);
 		}
 		tree->getRoot()->getData()->display();
 		turn++;

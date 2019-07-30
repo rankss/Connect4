@@ -93,57 +93,59 @@ int c4::result(bool t, bool p) {
 	return 0;
 }
 
-int c4::heuristic_fp() {
-	U64 c = curr^mask;
-	int score = 0;
-	if (threat(mask, c, moves)) {
-		getZug();
-		score += 50;
-	}
-	else {
-		giveZug();
-	}
+// int c4::heuristic_fp() {
+// 	U64 c = curr^mask;
+// 	int score = 0;
+// 	if (threat(mask, c, moves)) {
+// 		getZug();
+// 		score += 50;
+// 	}
+// 	else {
+// 		giveZug();
+// 	}
 
-	if (threat(mask, c^mask, moves-1)) {
-		score -= 50;
-	}
+// 	if (threat(mask, c^mask, moves-1)) {
+// 		score -= 50;
+// 	}
 
-	if (zug) {
-		// do zug things
-	} else {
-		// do things to get zug
-	}
-	return score;
-}
+// 	if (zug) {
+// 		// do zug things
+// 	} else {
+// 		// do things to get zug
+// 	}
+// 	return score;
+// }
 
-int c4::heuristic_sp() {
-	U64 c = curr;
-	int score = 0;
-	if (threat(mask, c, moves-1)) {
-		giveZug();
-		score -= 50
-	}
-	else {
-		getZug();
-		score += 50;
-	}
+// int c4::heuristic_sp() {
+// 	U64 c = curr;
+// 	int score = 0;
+// 	if (threat(mask, c, moves-1)) {
+// 		giveZug();
+// 		score -= 50
+// 	}
+// 	else {
+// 		getZug();
+// 		score += 50;
+// 	}
 
-	if (threat(mask, c^mask, moves)) {
-		score += 50
-	}
+// 	if (threat(mask, c^mask, moves)) {
+// 		score += 50
+// 	}
 
-	if (zug) {
-		// do zug things
-	} else {
-		// do things to get zug
-	}
+// 	if (zug) {
+// 		// do zug things
+// 	} else {
+// 		// do things to get zug
+// 	}
 
-	return score;
-}
+// 	return score;
+// }
 
-int c4::heuristic(bool t) {
-	if (t) return heuristic_fp();
-	else return heuristic_sp();
+int c4::heuristic(U8 col) {
+	return lowInverse(mask, col, zug);
+
+	// if (t) return heuristic_fp();
+	// else return heuristic_sp();
 }
 
 std::vector<U8> c4::possible() {

@@ -32,7 +32,7 @@ public:
 	int result(bool t, bool p);
 	int heuristic_fp();
 	int heuristic_sp();
-	int heuristic(bool t);
+	int heuristic(U8 col);
 
 	std::vector<U8> possible();
 
