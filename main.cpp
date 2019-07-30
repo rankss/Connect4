@@ -39,7 +39,17 @@ void startMinimax() {
 	bool first = tree->getFirst();
 	cout << first << endl;
 	tree->select();
-	tree->getRoot()->getData()->display();
+	// tree->getRoot()->getData()->display();
+	// tree->select();
+	// tree->getRoot()->getData()->display();
+	// tree->select();
+	// tree->getRoot()->getData()->display();
+	// tree->select();
+	// tree->getRoot()->getData()->display();
+	// tree->select();
+	// tree->getRoot()->getData()->display();
+	// tree->select();
+	// tree->getRoot()->getData()->display();
 	delete tree;
 }
 

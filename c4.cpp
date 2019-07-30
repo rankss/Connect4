@@ -50,7 +50,7 @@ bool c4::draw(U64 c) {
 void c4::getZug() {
 	if (!zug) {
 		zug = true;
-		std::cout << "AI gain control of Zugswang" << std::endl;
+		//std::cout << "AI gain control of Zugswang" << std::endl;
 	}
 	
 }
@@ -58,7 +58,7 @@ void c4::getZug() {
 void c4::giveZug() {
 	if (zug) {
 		zug = false;
-		std::cout << "AI lost control of Zugswang" << std::endl;
+		//std::cout << "AI lost control of Zugswang" << std::endl;
 	}
 }
 
@@ -96,7 +96,7 @@ int c4::result(bool t, bool p) {
 int c4::heuristic_fp() {
 	U64 c = curr^mask;
 	int score = 0;
-	//std::cout << "First player heurtistic" << std::endl;
+	std::cout << "First player heurtistic" << std::endl;
 	if (threat(mask, c, moves)) {
 		getZug();
 		score += 50;
@@ -118,7 +118,7 @@ int c4::heuristic_fp() {
 int c4::heuristic_sp() {
 	U64 c = curr;
 	int score = 0;
-	//std::cout << "Second player heurtistic" << std::endl;
+	std::cout << "Second player heurtistic" << std::endl;
 	if (threat(mask, c, moves-1)) {
 		giveZug();
 		score -= 50;
