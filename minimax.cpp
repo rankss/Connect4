@@ -19,12 +19,8 @@ void minimax<T>::populate(node<T> *n, int d) {
 		return;
 	}
 
-	if (n->getChildren().size() > 0)
-		for (node<T> *child : n->getChildren())
-			populate(child, d - 1);
-
 	node<T> *c;
-	for (int m : root->getData()->possible()) {
+	for (U8 m : root->getData()->possible()) {
 		c = new node<T>(*n);
 		c->play(m);
 		//c->getData()->display();
@@ -88,7 +84,8 @@ void minimax<T>::select() {
 	for (node<T> *c : root->getChildren()) {
 		if (c->getChildren().empty()) {
 			// Winning move
-			std::cout << "here" << std::endl;
+			//std::cout << "here" << std::endl;
+			std::cout << "AI chose: " << c->getMove() << std::endl;
 			node<T> *n = new node<c4>(*c);
 			delete root;
 			root = n;
@@ -96,6 +93,7 @@ void minimax<T>::select() {
 		}
 	}
 	int idx = root->find();
+	std::cout << "AI chose: " << root->getChildren()[idx]->getMove() << std::endl;
 	node<T> *n = new node<c4>(*root->getChildren()[idx]);
 	delete root;
 	root = n;

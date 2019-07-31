@@ -154,7 +154,13 @@ int c4::heuristic(bool t) {
 }
 
 std::vector<U8> c4::possible() {
-	std::vector<U8> moves = {3,4,2,5,1,6,0};
+	U8 all[7] = {3,4,2,5,1,6,0};
+	std::vector<U8> moves;
+	for (U8 i = 0; i < 7; i++) {
+		if (playable(all[i])) {
+			moves.push_back(all[i]);
+		}
+	}
 	return moves;
 }
 
