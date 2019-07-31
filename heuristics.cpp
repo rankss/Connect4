@@ -165,3 +165,34 @@ int vertical(U64 mask, U64 s, U8 col) {
 	}
 	return 0;
 }
+
+// If the number of empty squares in a column are odd then the function returns true, otherwise false.
+bool oddColumns(U64 stateOfTheBoard, U8 column) {
+	U64 spot = 1;
+	spot <<= U64((HEIGHT+1)*column);
+	int counter = 0;
+
+	for (int i = 0; i < HEIGHT; i++) {
+		if ((spot & stateOfTheBoard) == spot)
+			counter += 1;
+		spot <<= U64(1);
+	}
+	return counter % 2;
+}
+
+// If there is 2 or more columns containing an odd number of empty squares and
+// the current column is one of those columns, then it returns of heurstic value,
+// Assuming the player has the zugswang.
+int lowInverse(U64 stateOfTheBoard, U8 column, bool zug) {
+	if (zug)
+		return 0;
+
+	int oddColumnz = 0;
+
+	for (int i = 0; i < 7; i++)
+		if (oddColumns(stateOfTheBoard, i) == true)
+			oddColumnz += 1;
+
+	if (oddColumnz >= 2 && (oddColumns(stateOfTheBoard, column) == true))
+		return LOWIVNERSE_VALUE;
+}
