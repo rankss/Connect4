@@ -15,33 +15,31 @@ hmcst<T>::~hmcst() {
 template <typename T>
 void hmcst<T>::playout(node<T> *n) {
 	// Do playouts based on a probability of each move being selected
-	int pr, s, p = P, total, i;
-	U8 m;
+	int s, p = P;
+	U8 m, mc = n->getData()->getMoves(), cmc;
 	std::vector<U8> moves;
 	node<T> *c = nullptr;
 	while (p--) {
+		// Do a playout
 		c = new node<T>(*n);
 		n->setChild(c);
-		total = 0, s = 0;
-		std::vector<int> probability;
-		while (s < 50 || !c->getData()->result(first, false)) {
-			moves = c->getData()->possible();
-			for (m : moves) {
-				probability.push_back(total);
-				total += c->getData()->move_heuristic(m);
-			}
-			pr = rand() % total;
-			m = moves[std::lower_bound(probability.begin(), probability.end(), pr)];
-			s += c->getData()->heuristic(first);
-			c->setScore(s);
-			c->play(m);
+		s = 0;
+		while (!s) {
+			moves = c->getData()->possible(); // Get all possible moves
+			if (moves.empty()) break;
+			m = moves[rand() % moves.size()]; // Select random move
+			c->play(m); // Play move
+			cmc = c->getData()->getMoves() - mc;
+			c->setScore(c->getData()->result(first, false)/cmc);
+			s = c->getScore();
 		}
+		backpropagate(n);
 	}
 }
 
 template <typename T>
 void hmcst<T>::populate() {
-	int max = INT_MAX;
+	int max = INT_MIN;
 	node<T> *n = nullptr;
 	for (U8 m : root->getData()->possible()) {
 		n = new node<T>(*root);
@@ -49,8 +47,12 @@ void hmcst<T>::populate() {
 
 		if (!n->getData()->result(first, false))
 			playout(n);
-		else
-			root->setChild(n), break;
+		else {
+			if (n->getData()->result(first, false) > 0) {
+				root->setChild(n);
+				break;
+			}
+		}
 		
 		if (n->getScore() > max) {
 			max = n->getScore();
@@ -58,13 +60,51 @@ void hmcst<T>::populate() {
 		} else {
 			delete n;
 		}
-
 	}
 }
 
 template <typename T>
 int hmcst<T>::backpropagate(node<T> *n) {
-	
+	if (n->getChild() == nullptr)
+		return n->getScore();
+
+	n->setScore(n->getScore() + backpropagate(n->getChild()));
+	return n->getScore();
 }
 
-template class mcst<c4>;
+template <typename T>
+node<T>* hmcst<T>::getRoot() {
+	return root;
+}
+
+template <typename T>
+bool hmcst<T>::getFirst() {
+	return first;
+}
+
+template <typename T>
+void hmcst<T>::select() {
+	// AI move
+	std::cout << "AI's turn" << std::endl;
+	populate();
+	node<T> *n = new node<T>(*root->getChild());
+	std::cout << "AI chose: " << n->getMove() << std::endl;
+	delete root;
+	root = n;
+}
+
+template <typename T>
+void hmcst<T>::play() {
+	// Player move
+	std::vector<U8> moves = root->getData()->possible();
+	std::cout << "Player's turn" << std::endl;
+
+	U8 m;
+	std::cout << "Please choose a move: ";
+	while (std::cin >> m && std::find(moves.begin(), moves.end(), m) == moves.end())
+		std::cout << "Please choose a valid move: ";
+
+	root->play(m);
+}
+
+template class hmcst<c4>;

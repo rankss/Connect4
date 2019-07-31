@@ -3,7 +3,10 @@
 
 #include <cstdlib>
 #include <algorithm>
+#include <climits>
 #include "node.h"
+
+#define P 25000
 
 template <typename T>
 class hmcst {
@@ -22,6 +25,8 @@ public:
 	node<T>* getRoot();
 	bool getFirst();
 
+	void select();
+	void play();
 };
 
 #endif

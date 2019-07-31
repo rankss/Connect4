@@ -66,6 +66,10 @@ void c4::setZug(bool z) {
 	zug = z;
 }
 
+U8 c4::getMoves() {
+	return moves;
+}
+
 void c4::play(U8 col) {
 	curr ^= mask;
 	mask |= mask + bottom_mask(col);
@@ -79,15 +83,15 @@ int c4::result(bool t, bool p) {
 	if (alignment(c)) {
 		if (moves%2 == t) {
 			if (p) std::cout << "AI wins." << std::endl;
-			return 3;
+			return 3000;
 		}
 		else {
 			if (p) std::cout << "Player wins." << std::endl;
-			return -5;
+			return -5000;
 		}
 	} else if (draw(c)) {
 		if (p) std::cout << "Draw." << std::endl;
-		return 1;
+		return 1000;
 	}
 
 	return 0;
