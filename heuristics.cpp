@@ -148,14 +148,11 @@ int vertical(U64 mask, U64 s, U8 col) {
 	U64 three = U64(7) << (col*WIDTH);
 
 	int i = 0;
-	while (i+3 <= 5) {
+	while (i+4 <= 5) {
 		if ((three & s) == three && placeable(mask, col, i+4)) {
 			return 10;
 		}
 
-		// std::cout << two << " stuff "<< (two & s) << std::endl;
-		// std::cout << "column " << col << std::endl;
-		// std::cout << "playable " << placeable(mask, col, i+3) << std::endl;
 		if ((two & s) == two && placeable(mask, col, i+3)) {
 			return 5;
 		}
