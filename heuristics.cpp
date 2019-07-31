@@ -148,7 +148,7 @@ int vertical(U64 mask, U64 s, U8 col) {
 	U64 three = U64(7) << (col*WIDTH);
 
 	int i = 0;
-	while (i+4 <= 5) {
+	while (i+3 < HEIGHT) {
 		if ((three & s) == three && placeable(mask, col, i+4)) {
 			return 10;
 		}

@@ -34,7 +34,7 @@ public:
 
 	void play(U8 col);
 	int result(bool t, bool p);
-	int heuristic(U8 m);
+	int heuristic();
 
 	std::vector<U8> possible();
 

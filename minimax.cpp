@@ -40,7 +40,7 @@ int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer) {
 	if (n->getChildren().empty()) {
 		// n->getData()->display();
 		// std::cout << n->getData()->heuristic(first) << std::endl;
-		return n->getData()->heuristic(n->getData()->getMoves());
+		return n->getData()->heuristic();
 	}
 
 	int value;
