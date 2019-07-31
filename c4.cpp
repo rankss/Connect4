@@ -116,6 +116,8 @@ int c4::heuristic_fp() {
 	for (int i = 0; i < WIDTH; i++) {
 		score += vertical(mask, c, i);
 		score -= vertical(mask, c^mask, i);
+		score += claimEven(i, mask, zug);
+		score += lowInverse(mask, i, zug);
 	}
 
 	if (alignment(c)) return 1000;
@@ -144,6 +146,8 @@ int c4::heuristic_sp() {
 	for (int i = 0; i < WIDTH; i++) {
 		score += vertical(mask, c^mask, i);
 		score -= vertical(mask, c, i);
+		score -= claimEven(i, mask, zug);
+		score -= lowInverse(mask, i, zug);
 	}
 
 	if (alignment(c^mask)) return -1000;
