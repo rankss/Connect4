@@ -146,8 +146,8 @@ int c4::heuristic_sp() {
 		score -= vertical(mask, c, i);
 	}
 
-	if (alignment(c)) return 1000;
-	if (alignment(c^mask)) return -1000;
+	if (alignment(c)) return -1000;
+	if (alignment(c^mask)) return 1000;
 
 	return score;
 }
