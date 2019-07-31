@@ -38,8 +38,8 @@ int minimax<T>::iterate() {
 template <typename T>
 int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first) {
 	if (n->getChildren().empty()) {
-		n->getData()->display();
-		std::cout << n->getData()->heuristic(first) << std::endl;
+		//n->getData()->display();
+		//std::cout << n->getData()->heuristic(first) << std::endl;
 		return n->getData()->heuristic(first);
 	}
 
@@ -97,7 +97,7 @@ void minimax<T>::select() {
 		idx = root->findMax();
 	else
 		idx = root->findMin();
-	
+
 	std::cout << "AI chose: " << root->getChildren()[idx]->getMove() << std::endl;
 	node<T> *n = new node<c4>(*root->getChildren()[idx]);
 	delete root;

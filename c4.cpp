@@ -130,15 +130,15 @@ int c4::heuristic_sp() {
 	//std::cout << "Second player heurtistic" << std::endl;
 	if (threat(mask, c, moves-1)) {
 		giveZug();
-		score -= 50;
+		score += 50;
 	}
 	else {
 		getZug();
-		score += 50;
+		score -= 50;
 	}
 
 	if (threat(mask, c^mask, moves)) {
-		score += 50;
+		score -= 50;
 	}
 
 	for (int i = 0; i < WIDTH; i++) {
@@ -146,8 +146,8 @@ int c4::heuristic_sp() {
 		score -= vertical(mask, c, i);
 	}
 
-	if (alignment(c)) return 1000;
-	if (alignment(c^mask)) return -1000;
+	if (alignment(c)) return -1000;
+	if (alignment(c^mask)) return 1000;
 
 	return score;
 }
