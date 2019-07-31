@@ -83,9 +83,9 @@ void startHMCST() {
 }
 
 int main() {
-	//srand(time(nullptr));
+	srand(time(nullptr));
 	//startMCST();
-	//startMinimax();
-	startHMCST();
+	startMinimax();
+	//startHMCST();
 	return 0;
 }

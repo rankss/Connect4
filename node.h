@@ -33,7 +33,8 @@ public:
 	U8 getMove();
 
 	void play(U8 col);
-	int find();
+	int findMax();
+	int findMin();
 };
 
 #endif

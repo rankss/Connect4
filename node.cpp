@@ -83,10 +83,22 @@ void node<T>::play(U8 col) {
 }
 
 template <typename T>
-int node<T>::find() {
+int node<T>::findMax() {
 	int m = -10000000, idx = -1;
 	for (uint i = 0; i < children.size(); i++) {
 		if (children[i]->getScore() > m) {
+			m = children[i]->getScore();
+			idx = i;
+		}
+	}
+	return idx;
+}
+
+template <typename T>
+int node<T>::findMin() {
+	int m = 10000000, idx = -1;
+	for (uint i = 0; i < children.size(); i++) {
+		if (children[i]->getScore() < m) {
 			m = children[i]->getScore();
 			idx = i;
 		}
