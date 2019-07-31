@@ -86,7 +86,6 @@ template <typename T>
 int node<T>::find() {
 	int m = -10000000, idx = -1;
 	for (uint i = 0; i < children.size(); i++) {
-		//std::cout << children[i]->getMove() << " score " << children[i]->getScore() << std::endl;
 		if (children[i]->getScore() > m) {
 			m = children[i]->getScore();
 			idx = i;

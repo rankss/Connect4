@@ -40,7 +40,10 @@ void startMinimax() {
 	int turn = first;
 	while (!tree->getRoot()->getData()->result(first, true)) {
 		if (turn) {
+			start = time(nullptr);
 			tree->select();
+			elapsed = time(nullptr) - start;
+			cout << "Move took: " << elapsed << " seconds. Tree depth: " << 7 <<endl;
 		} else {
 			tree->play();
 		}
