@@ -48,6 +48,7 @@ void startMinimax() {
 			tree->play();
 		}
 		tree->getRoot()->getData()->display();
+		//cout << tree->getRoot()->getData()->heuristic(tree->getRoot()->getData()->getMoves()) << endl;
 		turn++;
 		turn%=2;
 	}

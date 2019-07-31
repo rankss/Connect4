@@ -195,4 +195,6 @@ int lowInverse(U64 stateOfTheBoard, U8 column, bool zug) {
 
 	if (oddColumnz >= 2 && (oddColumns(stateOfTheBoard, column) == true))
 		return LOWINVERSE_VALUE;
+
+	return 0;
 }

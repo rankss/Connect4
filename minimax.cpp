@@ -36,18 +36,18 @@ int minimax<T>::iterate() {
 }
 
 template <typename T>
-int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first) {
+int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer) {
 	if (n->getChildren().empty()) {
-		//n->getData()->display();
-		//std::cout << n->getData()->heuristic(first) << std::endl;
-		return n->getData()->heuristic(first);
+		// n->getData()->display();
+		// std::cout << n->getData()->heuristic(first) << std::endl;
+		return n->getData()->heuristic(n->getData()->getMoves());
 	}
 
 	int value;
 	if (maxPlayer) {
 		value = INT_MIN;
 		for (node<T> *c : n->getChildren()) {
-			value = std::max(value, alphabeta(c, a, b, false, first));
+			value = std::max(value, alphabeta(c, a, b, false));
 			a = std::max(a, value);
 			n->setScore(a);
 			if (a >= b) break;
@@ -55,7 +55,7 @@ int minimax<T>::alphabeta(node<T> *n, int a, int b, bool maxPlayer, bool first) 
 	} else {
 		value = INT_MAX;
 		for (node<T> *c : n->getChildren()) {
-			value = std::min(value, alphabeta(c, a, b, true, first));
+			value = std::min(value, alphabeta(c, a, b, true));
 			b = std::min(b, value);
 			n->setScore(b);
 			if (a >= b) break;
@@ -80,7 +80,7 @@ void minimax<T>::select() {
 	// AI move
 	int idx = -1;
 	populate(root, 7);
-	alphabeta(root, INT_MIN, INT_MAX, first, first);
+	alphabeta(root, INT_MIN, INT_MAX, first);
 	for (node<T> *c : root->getChildren()) {
 		if (c->getChildren().empty()) {
 			// Winning move
